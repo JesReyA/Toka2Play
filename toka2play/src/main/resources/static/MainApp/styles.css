@@ -9,7 +9,7 @@
 
 body.toka-body {
     background-color: var(--toka-dark);
-    background-image: url('Fondo.png');
+    background-image: url('/images/Fondo.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center top;
