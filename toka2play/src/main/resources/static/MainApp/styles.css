@@ -1,0 +1,296 @@
+:root {
+    --toka-cyan: #00e5ff;
+    --toka-dark: #071b40;
+    --toka-blue-bg: #0b224e;
+    --toka-light-bg: #f9fbfd;
+    --toka-text-color: #333333;
+    --toka-light-nav: #ffffff;
+}
+
+body.toka-body {
+    background-color: var(--toka-dark);
+    background-image: url('Fondo.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-attachment: fixed;
+    margin: 0;
+    font-family: 'Outfit', sans-serif;
+    color: white;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.mobile-app-container {
+    width: 100%;
+    max-width: 100vw;
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: transparent;
+}
+
+.app-header {
+    padding: 20px 20px 5px 20px;
+}
+
+.profile-section {
+    position: relative;
+}
+
+.profile-pic-btn {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0;
+    border: 2px solid white;
+    overflow: hidden;
+}
+
+.profile-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-level {
+    background: white;
+    color: var(--toka-dark);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 12px;
+    margin-top: -10px;
+    z-index: 2;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--toka-dark);
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.icon-btn:hover {
+    transform: scale(1.05);
+}
+
+.ranking-section img {
+    height: 60px;
+
+}
+
+.rewards-icons {
+    background: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    gap: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.reward-icon {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.greeting-section {
+    padding: 0 25px;
+}
+
+.greeting-title {
+    font-size: 2.8rem;
+    font-weight: 300;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.notification-icon {
+    margin-top: 5px;
+    height: 65px;
+}
+
+.question-section {
+    padding: 0 25px;
+}
+
+.question-subtitle {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.content-overlay {
+    background: var(--toka-light-bg);
+    border-top-left-radius: 35px;
+    border-top-right-radius: 35px;
+    padding: 30px 25px 100px 25px;
+    color: var(--toka-text-color);
+    box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.3);
+}
+
+.section-title-box {
+    margin-left: 5px;
+}
+
+.section-title-box h3 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--toka-text-color);
+    margin: 0 0 10px 0;
+}
+
+.featured-game-card,
+.featured-trivia-card,
+.featured-tienda-limited-card {
+    background: white;
+    width: 100%;
+    height: 160px;
+    border-radius: 16px;
+    border: 1px solid #e1e8f0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+}
+
+.featured-game-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+.featured-game-card img,
+.featured-trivia-card img,
+.featured-tienda-limited-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+.games-grid,
+.trivia-options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    width: 100%;
+}
+
+.tienda-options-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    width: 100%;
+}
+
+.game-item,
+.trivia-option-item,
+.tienda-option-item {
+    background: white;
+    padding-bottom: 0px;
+    border-radius: 16px;
+    border: 1px solid #e1e8f0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.game-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+.trivia-option-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+.tienda-option-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    background: var(--toka-light-nav);
+    height: 70px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 0px;
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.08);
+    z-index: 10;
+}
+
+.nav-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+.nav-btn img {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+}
+
+.nav-btn:hover img {
+    transform: scale(1.1);
+}
+
+.main-nav-btn-wrapper {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -45px;
+}
+
+.nav-center-bump {
+    background: var(--toka-light-nav);
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+    border: 6px solid var(--toka-light-bg);
+}
+
+.nav-center-bump img {
+    height: 60px;
+}
+
+#minijuegos-section,
+#trivia-section,
+#tienda-section {
+    display: none !important;
+}
+
+#tab-minijuegos:checked~#minijuegos-section,
+#tab-trivias:checked~#trivia-section,
+#tab-tienda:checked~#tienda-section {
+    display: flex !important;
+}
