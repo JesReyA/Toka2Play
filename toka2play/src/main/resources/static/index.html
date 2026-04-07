@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Snake Game - Toka c:</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Snake Game Toka c:</h1>
+
+<div class="game-header">
+    <div class="customization">
+        <button class="dot purple" onclick="selectColor('morado')"></button>
+        <button class="dot green" onclick="selectColor('verde')"></button>
+        <button class="dot blue" onclick="selectColor('azul')"></button>
+        <button class="dot pink" onclick="selectColor('rosa')"></button>
+        <button class="dot white" onclick="selectColor('blanco')"></button>
+    </div>
+
+    <div class="stats">
+        Nivel: <span id="levelVal">0</span> |
+        Puntaje: <span id="scoreVal">0</span> |
+        🏆 Máximo: <span id="highScoreVal">0</span>
+    </div>
+</div>
+
+<div id="game-container">
+    <canvas id="snakeGame" width="400" height="400"></canvas>
+
+    <div id="gameOverModal" class="modal">
+        <div class="modal-content">
+            <h2>¡JUEGO TERMINADO!</h2>
+            <p id="finalScoreText">Puntaje obtenido: 0</p>
+            <button onclick="closeModal()">REINTENTAR</button>
+        </div>
+    </div>
+</div>
+
+<div class="mobile-controls">
+    <button class="btn-up" onclick="changeDir('up')">▲</button>
+    <div class="horizontal-btns">
+        <button onclick="changeDir('left')">◀</button>
+        <button onclick="changeDir('right')">▶</button>
+    </div>
+    <button class="btn-down" onclick="changeDir('down')">▼</button>
+</div>
+
+<script src="snake.js"></script>
+</body>
+</html>
