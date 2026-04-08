@@ -10,4 +10,9 @@ public class MainController {
     public String index() {
         return "redirect:/MainApp/index.html";
     }
+
+    @GetMapping("/arkanoid")
+    public String arkanoid() {
+        return "redirect:/minijuegos/arkanoid/arkanoid.html";
+    }
 }
