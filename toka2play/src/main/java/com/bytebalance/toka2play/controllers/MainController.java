@@ -15,4 +15,9 @@ public class MainController {
     public String arkanoid() {
         return "redirect:/minijuegos/arkanoid/arkanoid.html";
     }
+
+    @GetMapping("/snake")
+    public String snake() {
+        return "redirect:/minijuegos/snake/snake.html";
+    }
 }
