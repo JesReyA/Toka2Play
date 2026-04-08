@@ -5,17 +5,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class MainController {
+
     @GetMapping({"/", "/index"})
     public String index() {
         return "index";
     }
 
     @GetMapping("/minijuegos/snake")
-    public String snake() { return "snake"; }
+    public String snake() { return "/minijuegos/snake"; }
 
     @GetMapping("/minijuegos/arkanoid")
-    public String arkanoid() { return "arkanoid"; }
+    public String arkanoid() { return "/minijuegos/arkanoid"; }
 
     @GetMapping("/minijuegos/doodle")
-    public String doodle() { return "paginalnicioMiniApp"; }
+    public String doodle() { return "/minijuegos/paginalnicioMiniApp"; }
 }
