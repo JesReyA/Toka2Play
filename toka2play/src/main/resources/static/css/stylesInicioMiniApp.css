@@ -1,0 +1,76 @@
+:root {
+    --toka-cyan: #00e5ff;
+    --toka-dark: #071b40;
+    --toka-cyan-glow: rgba(0, 229, 255, 0.6);
+}
+
+body {
+    background-color: var(--toka-dark);
+    background-image: url('Fondo.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-attachment: fixed;
+    margin: 0;
+    font-family: 'Outfit', sans-serif;
+    color: white;
+}
+
+.logo-img {
+    max-width: 400px;
+    width: 100%;
+    filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.3));
+}
+
+.subtitle-text {
+    font-size: clamp(1rem, 4vw, 1.25rem);
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+.btn-toka {
+    border-radius: 12px;
+    padding: 14px 24px;
+    font-size: 1.3rem;
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    border: 2px solid var(--toka-cyan);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 0 15px var(--toka-cyan-glow), inset 0 0 8px var(--toka-cyan-glow);
+}
+
+.btn-toka:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px var(--toka-cyan), inset 0 0 15px var(--toka-cyan);
+}
+
+.btn-toka:active {
+    transform: translateY(0);
+}
+
+.btn-primary-toka {
+    background-color: #ffffff;
+    color: var(--toka-dark);
+}
+
+.btn-secondary-toka {
+    background-color: rgba(7, 27, 64, 0.4);
+    color: #ffffff;
+}
+
+#Esquina_superior_izquierda,
+#Esquina_superior_derecha,
+#Esquina_inferior_izquierda {
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+}
+
+.corner-img {
+    width: 30vw;
+    max-width: 150px;
+    display: block;
+}
