@@ -4,17 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    
     <link rel="stylesheet" href="/css/stylesMain.css">
-
     <title>Crear Trivia - Toka2Play</title>
-
     <style>
         .trivia-form-card {
             background: rgba(30, 40, 60, 0.65);
@@ -28,7 +24,6 @@
             margin: auto;
             width: 100%;
         }
-
         .trivia-label {
             font-size: 0.85rem;
             font-weight: 600;
@@ -39,7 +34,6 @@
             text-transform: uppercase;
             color: #ffffff;
         }
-
         .trivia-input {
             width: 100%;
             background: rgba(0, 0, 0, 0.3);
@@ -51,54 +45,56 @@
             outline: none;
             transition: all 0.3s;
         }
-        .trivia-input::placeholder {
-            color: rgba(0, 240, 255, 0.4);
-        }
+        .trivia-input::placeholder { color: rgba(0, 240, 255, 0.4); }
         .trivia-input:focus {
             border-color: #00f0ff;
             box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
         }
-
         .trivia-help-text {
             font-size: 0.75rem;
             color: #a0c4d8;
             line-height: 1.4;
             margin-top: 2px;
-            margin-bottom: 0px;
         }
-
-        .trivia-select {
-            display: flex;
-            align-items: center;
+        .trivia-select-real {
             width: 100%;
             background: rgba(0, 0, 0, 0.3);
             border: 2px solid #00ff88;
             border-radius: 12px;
             padding: 12px 18px;
             color: #00ff88;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
-            box-shadow: 0 0 15px rgba(0, 255, 136, 0.15), inset 0 0 8px rgba(0, 255, 136, 0.1);
             cursor: pointer;
-            letter-spacing: 1px;
             margin-top: 5px;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
         }
-
-        .custom-range-container {
-            margin-top: 10px;
-            position: relative;
+        .trivia-select-real option { background: #1a2540; color: #00ff88; }
+        .select-wrapper { position: relative; }
+        .select-wrapper::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #00ff88;
+            pointer-events: none;
         }
+        .custom-range-container { margin-top: 10px; }
         .custom-range {
             -webkit-appearance: none;
             width: 100%;
             height: 6px;
-            background: linear-gradient(to right, #00f0ff 50%, rgba(255,255,255,0.2) 50%);
+            background: linear-gradient(to right, #00f0ff 0%, rgba(255,255,255,0.2) 0%);
             border-radius: 5px;
             outline: none;
         }
         .custom-range::-webkit-slider-thumb {
             -webkit-appearance: none;
-            appearance: none;
             width: 20px;
             height: 20px;
             background: #00f0ff;
@@ -106,7 +102,6 @@
             cursor: pointer;
             box-shadow: 0 0 12px #00f0ff;
         }
-
         .range-labels {
             display: flex;
             justify-content: space-between;
@@ -115,14 +110,7 @@
             color: white;
             padding: 0 5px;
         }
-        .range-labels span {
-            transition: color 0.2s;
-        }
-        .range-labels .active-label {
-            color: #00f0ff;
-            font-weight: 600;
-        }
-
+        .range-labels .active-label { color: #00f0ff; font-weight: 600; }
         .time-blocks {
             display: flex;
             width: 140px;
@@ -135,7 +123,6 @@
         .time-block-cyan { background: #00f0ff; }
         .time-block-yellow { background: #ffd700; }
         .time-block-red { background: #ff4757; }
-
         .difficulty-segmented {
             display: flex;
             width: 180px;
@@ -159,9 +146,7 @@
             border: 1px solid #00f0ff;
             color: #00f0ff;
             font-weight: 600;
-            box-shadow: 0 0 10px rgba(0,240,255,0.2);
         }
-
         .room-code {
             background: rgba(0, 0, 0, 0.4);
             border: 2px dashed rgba(0, 240, 255, 0.4);
@@ -187,10 +172,7 @@
             display: flex;
             align-items: center;
         }
-        .btn-copy-code:hover {
-            background: rgba(0, 240, 255, 0.3);
-        }
-
+        .btn-copy-code:hover { background: rgba(0, 240, 255, 0.3); }
         .btn-submit-trivia {
             width: 100%;
             margin-top: 30px;
@@ -204,13 +186,13 @@
             letter-spacing: 1px;
             box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
             transition: all 0.3s;
+            cursor: pointer;
         }
-        .btn-submit-trivia:hover {
+        .btn-submit-trivia:hover:not(:disabled) {
             background: rgba(0, 255, 136, 0.25);
             box-shadow: 0 0 25px rgba(0, 255, 136, 0.4);
         }
-
-        /* Top Bar Adjustments for this view */
+        .btn-submit-trivia:disabled { opacity: 0.5; cursor: not-allowed; }
         .top-bar-custom {
             padding: 20px 25px 10px 25px;
             display: flex;
@@ -226,13 +208,36 @@
             align-items: center;
             gap: 5px;
         }
+        #loading-state {
+            display: none;
+            text-align: center;
+            padding: 15px;
+            color: #00f0ff;
+        }
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0,240,255,0.3);
+            border-top-color: #00f0ff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 8px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        #error-msg {
+            display: none;
+            color: #ff4757;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 
 <body class="toka-body">
     <div class="mobile-app-container">
 
-        <!-- Header: Back button & Game Master Mode -->
         <div class="top-bar-custom">
             <a href="/" class="back-btn"><i class="fa-solid fa-chevron-left"></i> BACK</a>
             <div class="d-flex flex-column align-items-end" style="color: #00ff88; font-size: 0.8rem; font-weight: 600;">
@@ -242,28 +247,35 @@
         </div>
 
         <div class="scrollable-content p-3 h-100 d-flex flex-column justify-content-center" style="padding-bottom: 20px;">
-            
-            <!-- CENTRAL CARD -->
             <div class="trivia-form-card">
-                
+
                 <label class="trivia-label mt-0">NOMBRE DE LA TRIVIA</label>
-                <input type="text" class="trivia-input" placeholder="ej: Noche de Gamers Retro">
+                <input type="text" id="trivia-nombre" class="trivia-input" placeholder="ej: Noche de Gamers Retro">
 
                 <label class="trivia-label">CONFIGURACIÓN AUTOMÁTICA DE PREGUNTAS</label>
-                <p class="trivia-help-text">Configuración automática de preguntas para configurar el pool de preguntas. Esto balanceará la dificultad de forma balanceada con respecto al tema.</p>
+                <p class="trivia-help-text">La IA generará las preguntas según la categoría, dificultad y cantidad que elijas.</p>
 
                 <label class="trivia-label">SELECCIONAR CATEGORÍA</label>
-                <div class="trivia-select">
-                    <i class="fa-solid fa-gamepad me-3"></i> VIDEOJUEGOS 
-                    <i class="fa-solid fa-chevron-down ms-auto" style="font-size: 1rem;"></i>
+                <div class="select-wrapper">
+                    <select id="categoria-select" class="trivia-select-real">
+                        <option value="videojuegos">🎮 VIDEOJUEGOS</option>
+                        <option value="historia">🏛️ HISTORIA</option>
+                        <option value="ciencia y tecnología">🔬 CIENCIA Y TECNOLOGÍA</option>
+                        <option value="cine y series">🎬 CINE Y SERIES</option>
+                        <option value="música">🎵 MÚSICA</option>
+                        <option value="deportes">⚽ DEPORTES</option>
+                        <option value="geografía">🌍 GEOGRAFÍA</option>
+                        <option value="cultura general">🧠 CULTURA GENERAL</option>
+                        <option value="anime y manga">🌸 ANIME Y MANGA</option>
+                    </select>
                 </div>
 
                 <label class="trivia-label">CANTIDAD DE PREGUNTAS</label>
                 <div class="custom-range-container">
-                    <input type="range" class="custom-range" id="preguntas-slider" min="10" max="20" step="5" value="15" oninput="updateSlider()">
+                    <input type="range" class="custom-range" id="preguntas-slider" min="10" max="20" step="5" value="10" oninput="updateSlider()">
                     <div class="range-labels">
-                        <span id="lb-10">10</span>
-                        <span id="lb-15" class="active-label">15</span>
+                        <span id="lb-10" class="active-label">10</span>
+                        <span id="lb-15">15</span>
                         <span id="lb-20">20</span>
                     </div>
                 </div>
@@ -278,11 +290,11 @@
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center mt-3">
-                    <label class="trivia-label mt-0 mb-0">DIFICULTAD AUTOMÁTICA</label>
+                    <label class="trivia-label mt-0 mb-0">DIFICULTAD</label>
                     <div class="difficulty-segmented">
-                        <div class="difficulty-btn active">Fácil</div>
-                        <div class="difficulty-btn">Medio</div>
-                        <div class="difficulty-btn">Challenge</div>
+                        <div class="difficulty-btn active" data-val="Fácil">Fácil</div>
+                        <div class="difficulty-btn" data-val="Medio">Medio</div>
+                        <div class="difficulty-btn" data-val="Challenge">Challenge</div>
                     </div>
                 </div>
 
@@ -295,53 +307,97 @@
                     <p class="text-center text-secondary mt-2 mb-0" style="font-size: 0.75rem;">Comparte este código con los demás para que se unan a la trivia.</p>
                 </div>
 
-                <button class="btn-submit-trivia mt-4">INICIALIZAR TRIVIA</button>
-                
+                <button class="btn-submit-trivia mt-4" id="btn-inicializar" onclick="inicializarTrivia()">
+                    <i class="fa-solid fa-robot me-2"></i>GENERAR CON IA E INICIALIZAR
+                </button>
+
+                <div id="loading-state">
+                    <div class="spinner"></div> Generando preguntas con IA...
+                </div>
+
+                <div id="error-msg"></div>
+
             </div>
-
         </div>
-
     </div>
 
     <script>
+        let dificultadSeleccionada = 'Fácil';
+
         function updateSlider() {
             const slider = document.getElementById('preguntas-slider');
             const val = slider.value;
-            const min = 10;
-            const max = 20;
-            
-            // Calculate percentage for background gradient
-            const percent = ((val - min) / (max - min)) * 100;
+            const percent = ((val - 10) / 10) * 100;
             slider.style.background = `linear-gradient(to right, #00f0ff ${percent}%, rgba(255,255,255,0.2) ${percent}%)`;
-            
-            // Update active label
-            document.getElementById('lb-10').classList.remove('active-label');
-            document.getElementById('lb-15').classList.remove('active-label');
-            document.getElementById('lb-20').classList.remove('active-label');
-            
-            document.getElementById(`lb-${val}`).classList.add('active-label');
+            ['10','15','20'].forEach(v => document.getElementById('lb-' + v).classList.remove('active-label'));
+            document.getElementById('lb-' + val).classList.add('active-label');
         }
 
-        // Segmented control logic for Demo
         document.querySelectorAll('.difficulty-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
+                dificultadSeleccionada = this.getAttribute('data-val');
             });
         });
 
-        // Copy room code to clipboard
         function copyRoomCode() {
             const code = document.getElementById('roomCodeText').innerText;
             navigator.clipboard.writeText(code).then(() => {
                 const btn = document.querySelector('.btn-copy-code i');
-                btn.classList.remove('fa-copy', 'fa-regular');
-                btn.classList.add('fa-check', 'fa-solid');
+                btn.classList.replace('fa-copy', 'fa-check');
+                btn.classList.replace('fa-regular', 'fa-solid');
                 setTimeout(() => {
-                    btn.classList.remove('fa-check', 'fa-solid');
-                    btn.classList.add('fa-copy', 'fa-regular');
+                    btn.classList.replace('fa-check', 'fa-copy');
+                    btn.classList.replace('fa-solid', 'fa-regular');
                 }, 2000);
             });
+        }
+
+        async function inicializarTrivia() {
+            const nombre = document.getElementById('trivia-nombre').value.trim() || 'Trivia';
+            const categoria = document.getElementById('categoria-select').value;
+            const cantidad = parseInt(document.getElementById('preguntas-slider').value);
+            const dificultad = dificultadSeleccionada;
+
+            const btn = document.getElementById('btn-inicializar');
+            const loading = document.getElementById('loading-state');
+            const errorMsg = document.getElementById('error-msg');
+
+            btn.style.display = 'none';
+            loading.style.display = 'block';
+            errorMsg.style.display = 'none';
+
+            try {
+                const response = await fetch('/api/trivia/generate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nombre, categoria, cantidad: String(cantidad), dificultad })
+});
+
+const data = await response.json();
+
+if (!response.ok || data.error) {
+    throw new Error(data.error || 'Error desconocido del servidor');
+}
+
+// Guardar preguntas y código generado en sessionStorage
+sessionStorage.setItem('triviaQuestions', JSON.stringify(data.questions));
+sessionStorage.setItem('triviaNombre', nombre);
+sessionStorage.setItem('triviaCodigo', data.codigo);
+
+// Mostrar código generado antes de redirigir
+document.getElementById('roomCodeText').textContent = data.codigo;
+
+window.location.href = '/trivias/contestando';
+
+            } catch (err) {
+                errorMsg.textContent = '⚠️ ' + err.message;
+                errorMsg.style.display = 'block';
+                btn.style.display = 'block';
+            } finally {
+                loading.style.display = 'none';
+            }
         }
     </script>
 </body>

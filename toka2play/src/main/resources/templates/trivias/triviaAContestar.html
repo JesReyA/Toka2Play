@@ -275,52 +275,48 @@
         <div class="scrollable-content p-3 h-100 d-flex flex-column justify-content-center"
             style="padding-bottom: 20px;">
 
-            <div class="trivia-play-card">
+            <div class="trivia-play-card" id="trivia-play-card">
 
                 <div class="trivia-header">
-                    <div class="playing-title">JUGANDO TRIVIA: NOCHE DE GAMERS RETRO</div>
-                    <div class="question-number">PREGUNTA 1/15</div>
+                    <div class="playing-title" id="playing-title">JUGANDO TRIVIA: CARGANDO...</div>
+                    <div class="question-number" id="question-number">PREGUNTA -/-</div>
                 </div>
 
                 <!-- Timer -->
                 <div class="timer-container">
                     <svg class="timer-ring">
                         <circle class="timer-ring__bg" cx="60" cy="60" r="54"></circle>
-                        <circle class="timer-ring__circle" cx="60" cy="60" r="54"></circle>
+                        <circle class="timer-ring__circle" id="timer-circle" cx="60" cy="60" r="54"></circle>
                     </svg>
-                    <div class="timer-text">0:12</div>
+                    <div class="timer-text" id="timer-text">15</div>
                 </div>
 
                 <!-- Pregunta -->
                 <div class="question-text-container">
-                    <div class="question-prefix">PREGUNTA 1:</div>
-                    <div class="question-body">¿Cuál fue el primer videojuego arcade comercial exitoso?</div>
+                    <div class="question-prefix" id="question-prefix">PREGUNTA -:</div>
+                    <div class="question-body" id="question-body">Cargando pregunta...</div>
                 </div>
 
                 <!-- Botones de Respuestas -->
                 <div class="answers-grid">
-                    <div class="answer-btn ans-cyan">
-                        <!-- Pong icon representation -->
-                        <i class="fa-solid fa-table-tennis-paddle-ball"></i> PONG
+                    <div class="answer-btn ans-cyan" onclick="seleccionarRespuesta(0)" id="btn-0">
+                        <i class="fa-solid fa-circle"></i> <span id="opcion-0">Opcion 1</span>
                     </div>
-                    <div class="answer-btn ans-purple">
-                        <!-- Space Invaders representation -->
-                        <i class="fa-brands fa-space-awesome"></i> SPACE INVADERS
+                    <div class="answer-btn ans-purple" onclick="seleccionarRespuesta(1)" id="btn-1">
+                        <i class="fa-solid fa-leaf"></i> <span id="opcion-1">Opcion 2</span>
                     </div>
-                    <div class="answer-btn ans-yellow">
-                        <!-- Pac-Man representation -->
-                        <i class="fa-solid fa-chart-pie" style="transform: rotate(-45deg);"></i> PAC-MAN
+                    <div class="answer-btn ans-yellow" onclick="seleccionarRespuesta(2)" id="btn-2">
+                        <i class="fa-solid fa-bolt"></i> <span id="opcion-2">Opcion 3</span>
                     </div>
-                    <div class="answer-btn ans-orange">
-                        <!-- Asteroids representation -->
-                        <i class="fa-solid fa-meteor"></i> ASTEROIDS
+                    <div class="answer-btn ans-orange" onclick="seleccionarRespuesta(3)" id="btn-3">
+                        <i class="fa-solid fa-fire"></i> <span id="opcion-3">Opcion 4</span>
                     </div>
                 </div>
 
                 <!-- Estadísticas de la partida en vivo -->
                 <div class="stats-row">
-                    <div class="stat-pill">Puntos: <span>0</span></div>
-                    <div class="stat-pill">Racha: <span>0x</span></div>
+                    <div class="stat-pill">Puntos: <span id="puntos-text">0</span></div>
+                    <div class="stat-pill">Racha: <span id="racha-text">0x</span></div>
                 </div>
 
             </div>
@@ -328,6 +324,174 @@
         </div>
 
     </div>
+    
+    <script>
+        let preguntas = [];
+        let nombreTrivia = "";
+        let codigoTrivia = "";
+        
+        let indexActual = 0;
+        let puntos = 0;
+        let racha = 0;
+        
+        let timerInterval;
+        const TIEMPO_PREGUNTA = 15;
+        let tiempoRestante = TIEMPO_PREGUNTA;
+        
+        let respondiendo = false; // flag to prevent multiple clicks
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedQuestions = sessionStorage.getItem('triviaQuestions');
+            nombreTrivia = sessionStorage.getItem('triviaNombre') || 'TRIVIA';
+            codigoTrivia = sessionStorage.getItem('triviaCodigo') || '';
+            
+            if (!storedQuestions) {
+                alert('No se encontraron preguntas. Regresando al inicio.');
+                window.location.href = '/';
+                return;
+            }
+            
+            preguntas = JSON.parse(storedQuestions);
+            document.getElementById('playing-title').textContent = "JUGANDO TRIVIA: " + nombreTrivia.toUpperCase();
+            
+            mostrarPregunta();
+        });
+        
+        function mostrarPregunta() {
+            if (indexActual >= preguntas.length) {
+                terminarTrivia();
+                return;
+            }
+            
+            respondiendo = false;
+            tiempoRestante = TIEMPO_PREGUNTA;
+            
+            const pregunta = preguntas[indexActual];
+            
+            document.getElementById('question-number').textContent = `PREGUNTA ${indexActual + 1}/${preguntas.length}`;
+            document.getElementById('question-prefix').textContent = `PREGUNTA ${indexActual + 1}:`;
+            document.getElementById('question-body').textContent = pregunta.pregunta;
+            
+            for (let i = 0; i < 4; i++) {
+                const btn = document.getElementById(`btn-${i}`);
+                btn.style.opacity = '1';
+                btn.style.boxShadow = '';
+                btn.style.borderColor = '';
+                
+                if (i < pregunta.opciones.length) {
+                    document.getElementById(`opcion-${i}`).textContent = pregunta.opciones[i];
+                    btn.style.display = 'flex';
+                } else {
+                    btn.style.display = 'none';
+                }
+            }
+            
+            actualizarUIStats();
+            iniciarContador();
+        }
+        
+        function actualizarUIStats() {
+            document.getElementById('puntos-text').textContent = puntos;
+            document.getElementById('racha-text').textContent = racha + "x";
+        }
+        
+        function iniciarContador() {
+            clearInterval(timerInterval);
+            document.getElementById('timer-text').textContent = tiempoRestante;
+            actualizarCirculoTimer();
+            
+            timerInterval = setInterval(() => {
+                tiempoRestante--;
+                document.getElementById('timer-text').textContent = tiempoRestante;
+                actualizarCirculoTimer();
+                
+                if (tiempoRestante <= 0) {
+                    clearInterval(timerInterval);
+                    seleccionarRespuesta(-1); // Timeout (incorrecto)
+                }
+            }, 1000);
+        }
+        
+        function actualizarCirculoTimer() {
+            const circle = document.getElementById('timer-circle');
+            const circumference = 339; // calculated roughly as 2 * pi * r (54)
+            const porcentaje = tiempoRestante / TIEMPO_PREGUNTA;
+            circle.style.strokeDashoffset = circumference - (porcentaje * circumference);
+        }
+        
+        function seleccionarRespuesta(index) {
+            if (respondiendo) return;
+            respondiendo = true;
+            clearInterval(timerInterval);
+            
+            const pregunta = preguntas[indexActual];
+            const esCorrecta = (index === pregunta.correcta);
+            
+            if (esCorrecta) {
+                puntos += 10 + (racha * 5);
+                racha++;
+                if (index !== -1) {
+                    marcarBoton(index, '#00ff88', true);
+                }
+            } else {
+                racha = 0;
+                if (index !== -1) {
+                    marcarBoton(index, '#ff4757', false);
+                }
+                marcarBoton(pregunta.correcta, '#00ff88', true);
+            }
+            
+            actualizarUIStats();
+            
+            setTimeout(() => {
+                indexActual++;
+                mostrarPregunta();
+            }, 2000);
+        }
+        
+        function marcarBoton(index, color, glow) {
+            const btn = document.getElementById(`btn-${index}`);
+            btn.style.borderColor = color;
+            if (glow) {
+                btn.style.boxShadow = `0 0 15px ${color}`;
+            }
+        }
+        
+        async function terminarTrivia() {
+            document.getElementById('trivia-play-card').innerHTML = `
+                <div class="text-center">
+                    <h2 class="text-white mb-4">¡Trivia Finalizada!</h2>
+                    <h1 style="color: #00f0ff; font-size: 3rem; margin-bottom: 20px;">${puntos} PTS</h1>
+                    <p class="text-white mb-4">Has respondido ${preguntas.length} preguntas.</p>
+                    <button class="btn btn-outline-info text-white me-2 mt-2" onclick="guardarTriviaYSalir()">Guardar Trivia en DB y Salir</button>
+                    <button class="btn btn-outline-light mt-2" onclick="window.location.href='/'">Volver al Inicio</button>
+                </div>
+            `;
+        }
+        
+        async function guardarTriviaYSalir() {
+            try {
+                const response = await fetch('/api/trivia/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        codigo: codigoTrivia,
+                        nombre: nombreTrivia,
+                        questions: preguntas
+                    })
+                });
+                if (response.ok) {
+                    alert('Trivia guardada correctamente para que otros se unan.');
+                } else {
+                    alert('Error al guardar la trivia.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Ocurrió un error: ' + err.message);
+            }
+            window.location.href = '/';
+        }
+    </script>
 </body>
 
 </html>
