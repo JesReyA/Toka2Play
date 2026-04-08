@@ -1,4 +1,7 @@
 // 1. CONFIGURACIÓN Y DOM
+
+let stompClient = null; // Esto "crea" el control remoto, aunque esté apagado al inicio
+
 const canvas = document.getElementById("snakeGame");
 const ctx = canvas.getContext("2d");
 const gridSize = 20;
@@ -74,9 +77,11 @@ function updateSnake() {
         checkLevelUp();
         document.getElementById('scoreVal').innerText = score;
         placeFood();
+        reportarPuntaje("snake", score);
     } else {
         snake.pop();
     }
+
 }
 
 function checkLevelUp() {
@@ -164,3 +169,39 @@ window.addEventListener("keydown", e => {
 
 // Inicio
 window.requestAnimationFrame(main);
+
+
+//funcion para reportar puntaje
+function reportarPuntaje(nombreJuego, puntos) {
+    if (stompClient && stompClient.connected) {
+        const payload = {
+            usuario: window.usuarioActual || "Invitado",
+            puntos: puntos
+        };
+
+        // El endpoint cambia dinámicamente según el juego
+        // Ejemplo: /app/snake/puntuar o /app/arkanoid/puntuar
+        stompClient.send(`/app/${nombreJuego}/puntuar`, {}, JSON.stringify(payload));
+
+        console.log(`Puntos de ${nombreJuego} enviados: ${puntos}`);
+    }
+}
+
+function conectar() {
+    const socket = new SockJS('/ws-toka'); // El endpoint de tu WebSocketConfig.java
+    stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, function (frame) {
+        console.log('Conectado al servidor de Toka2Play: ' + frame);
+
+        // Opcional: suscribirse para ver los puntos de otros
+        stompClient.subscribe('/topic/scores/tokasnakegame', function (mensaje) {
+            const data = JSON.parse(mensaje.body);
+            console.log("Actualización global recibida:", data);
+        });
+    }, function (error) {
+        console.error('Error de conexión:', error);
+    });
+}
+
+conectar();

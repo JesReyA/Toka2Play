@@ -14,7 +14,6 @@ public class TokaArkanoidController {
 
     @MessageMapping("/arkanoid/puntuar")
     public void procesarPuntoArkanoid(PuntoRequest request) {
-        // Usamos el identificador "tokaarkanoid"
         scoreService.actualizarPuntaje("tokaarkanoid", request.getUsuario(), request.getPuntos());
     }
 }
