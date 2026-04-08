@@ -13,7 +13,9 @@ body {
     touch-action: none;
 }
 
-h1 { margin: 10px 0; }
+h1 {
+    margin: 10px 0;
+}
 
 #game-container {
     position: relative;
@@ -22,7 +24,7 @@ h1 { margin: 10px 0; }
 
 canvas {
     border: 5px solid #ecf0f1;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     background-color: #34495e;
     display: block;
 }
@@ -52,7 +54,10 @@ canvas {
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
 }
 
-.modal-content h2 { color: #e74c3c; margin-top: 0; }
+.modal-content h2 {
+    color: #e74c3c;
+    margin-top: 0;
+}
 
 .modal-content button {
     background-color: #2ecc71;
@@ -71,22 +76,44 @@ canvas {
     margin-bottom: 10px;
 }
 
-.customization { display: flex; gap: 8px; align-items: center; }
+.customization {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
 
 .dot {
-    width: 25px; height: 25px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     border: 2px solid white;
     cursor: pointer;
     transition: 0.2s;
 }
-.dot:hover { transform: scale(1.2); }
 
-.purple { background-color: #9b59b6; }
-.green  { background-color: #2ecc71; }
-.blue   { background-color: #3498db; }
-.pink   { background-color: #e91e63; }
-.white  { background-color: #ffffff; }
+.dot:hover {
+    transform: scale(1.2);
+}
+
+.purple {
+    background-color: #9b59b6;
+}
+
+.green {
+    background-color: #2ecc71;
+}
+
+.blue {
+    background-color: #3498db;
+}
+
+.pink {
+    background-color: #e91e63;
+}
+
+.white {
+    background-color: #ffffff;
+}
 
 .stats {
     font-size: 1.1rem;
@@ -102,10 +129,14 @@ canvas {
     margin-top: 15px;
 }
 
-.horizontal-btns { display: flex; gap: 50px; }
+.horizontal-btns {
+    display: flex;
+    gap: 50px;
+}
 
 button {
-    width: 60px; height: 60px;
+    width: 60px;
+    height: 60px;
     font-size: 24px;
     margin: 10px;
     background-color: #3498db;
@@ -114,7 +145,25 @@ button {
     border-radius: 10px;
 }
 
+.btn-back {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: color 0.2s;
+}
+
+.btn-back:hover {
+    color: #00f0ff;
+}
+
 @media (max-width: 600px) {
-    canvas { width: 90vw; height: 90vw; }
-    .mobile-controls { display: flex; }
+    canvas {
+        width: 90vw;
+        height: 90vw;
+    }
+
+    .mobile-controls {
+        display: flex;
+    }
 }
