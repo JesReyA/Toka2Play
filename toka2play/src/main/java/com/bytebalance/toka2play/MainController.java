@@ -23,6 +23,9 @@ public class MainController {
     @GetMapping("/minijuegos/tokoala")
     public String tokoala() { return "/minijuegos/tokoala"; }
 
+    @GetMapping("/minijuegos/carros")
+    public String carros() { return "/minijuegos/carros"; }
+
     @GetMapping("/trivias/creacion")
     public String creacion() { return "/trivias/creacion"; }
 
