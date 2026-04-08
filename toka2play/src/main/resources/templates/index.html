@@ -9,10 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- FontAwesome para los íconos limpios con brillo neón -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         crossorigin="anonymous">
 
@@ -160,7 +158,7 @@
                 </section>
             </main>
 
-            <!-- ====== SECCION: TIENDA (Tab 3) ====== -->
+            <!-- ====== SECCION: TIENDA ====== -->
             <main class="content-overlay p-3" id="tienda-section">
                 <!-- Articulo Limitado -->
                 <section class="game-of-week-section w-100 mt-2">
@@ -214,7 +212,7 @@
                 </section>
             </main>
 
-            <!-- ====== SECCION: COMPETITIVO (Tab 4) ====== -->
+            <!-- ====== SECCION: COMPETITIVO ====== -->
             <main class="content-overlay p-3" id="competitivo-section">
                 <!-- Juego destacado Competitivo -->
                 <section class="game-of-week-section w-100 mt-2">
@@ -240,7 +238,7 @@
                 </section>
             </main>
 
-            <!-- ====== SECCION: PERFIL (Oculta, solo accesible via Avatar) ====== -->
+            <!-- ====== SECCION: PERFIL ====== -->
             <main class="content-overlay p-3 text-center d-flex flex-column justify-content-center align-items-center"
                 id="perfil-section" style="min-height: 400px;">
                 <div class="profile-avatar-wrapper" style="width: 120px; height: 120px; margin-bottom: 20px;">
@@ -377,15 +375,12 @@
                 items.forEach(item => {
                     const itemCenter = item.offsetLeft + item.clientWidth / 2;
                     let distance = itemCenter - center;
-                    // Max distance is roughly half container view
                     let maxDistance = carousel.clientWidth / 1.5;
 
-                    // Normalize distance from -1 to 1 based on position
                     let normalized = Math.max(-1, Math.min(1, distance / maxDistance));
 
-                    // Calculate rotation and scale
-                    const rotateY = normalized * 50; // Rotate up to 50 degrees
-                    const scale = 1 - Math.abs(normalized) * 0.2; // Scale down 20%
+                    const rotateY = normalized * 50;
+                    const scale = 1 - Math.abs(normalized) * 0.2;
                     const zIndex = Math.round(100 - Math.abs(normalized) * 100);
 
                     item.style.transform = `perspective(1000px) rotateY(${rotateY}deg) scale(${scale})`;
@@ -397,10 +392,8 @@
             carousel.addEventListener('scroll', updateCarousel);
             window.addEventListener('resize', updateCarousel);
 
-            // Initial call
             setTimeout(() => {
                 if (items.length > 1) {
-                    // Start correctly centered
                     carousel.scrollLeft = items[1].offsetLeft - (carousel.clientWidth / 2) + (items[1].clientWidth / 2);
                 }
                 updateCarousel();
