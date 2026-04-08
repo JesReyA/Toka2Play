@@ -1,4 +1,4 @@
-package com.bytebalance.toka2play.controllers;
+package com.bytebalance.toka2play;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -6,18 +6,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
 
-    @GetMapping("/")
+    @GetMapping({"/", "/index"})
     public String index() {
-        return "redirect:/MainApp/index.html";
+        // Esto busca el archivo "index.html" dentro de la carpeta templates
+        return "index";
     }
-
     @GetMapping("/arkanoid")
     public String arkanoid() {
-        return "redirect:/minijuegos/arkanoid/arkanoid.html";
+        return "arkanoid";
     }
 
     @GetMapping("/snake")
     public String snake() {
-        return "redirect:/minijuegos/snake/snake.html";
+        return "snake";
     }
 }
