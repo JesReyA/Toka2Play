@@ -378,3 +378,97 @@ body.toka-body {
 #tab-competitivo:checked ~ .bottom-glass-nav label[for="tab-competitivo"] i {
     transform: translateY(-5px);
 }
+
+/* Modales Glassmorphic */
+.glass-modal {
+    display: none;
+    position: absolute; /* Kept absolute to not break mobile container */
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    justify-content: center;
+    align-items: center;
+}
+
+.glass-modal.show {
+    display: flex;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.modal-content-glass {
+    background: rgba(20, 25, 40, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 25px;
+    padding: 25px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.05);
+    position: relative;
+    color: #fff;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal-content-glass::-webkit-scrollbar { display: none; }
+
+.close-btn-glass {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #8fa3b0;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.close-btn-glass:hover {
+    color: var(--toka-cyan);
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Elementos internos del Pop Up */
+.ranking-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+.ranking-item.is-me {
+    background: rgba(0, 240, 255, 0.1);
+    border-color: var(--toka-cyan);
+}
+.notification-item {
+    padding: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.notification-item:last-child {
+    border-bottom: none;
+}
+.currency-section {
+    background: rgba(0,0,0,0.3);
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255,255,255,0.05);
+}
