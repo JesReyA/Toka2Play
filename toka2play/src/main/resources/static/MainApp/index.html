@@ -9,9 +9,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- FontAwesome para los íconos limpios con brillo neón -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+        crossorigin="anonymous">
 
     <link rel="stylesheet" href="styles.css">
 
@@ -21,204 +24,302 @@
 <body class="toka-body">
     <div class="mobile-app-container">
 
-        <!-- Pestañas que cambian -->
+        <!-- Pestañas de estado invisible -->
         <input type="radio" name="main-tabs" id="tab-minijuegos" class="d-none" checked>
         <input type="radio" name="main-tabs" id="tab-tienda" class="d-none">
         <input type="radio" name="main-tabs" id="tab-trivias" class="d-none">
+        <input type="radio" name="main-tabs" id="tab-competitivo" class="d-none">
+        <input type="radio" name="main-tabs" id="tab-perfil" class="d-none">
 
-        <!-- Zona superior -->
+        <!-- TOP HEADER NAVBAR -->
         <header class="app-header d-flex justify-content-between align-items-start">
-            <div class="profile-section d-flex flex-column align-items-center">
-                <button class="icon-btn profile-pic-btn">
+            <div class="d-flex align-items-center gap-2">
+                <!-- Avatar y Nillo Carga -->
+                <label for="tab-perfil" class="profile-avatar-wrapper" style="cursor: pointer;">
+                    <svg class="progress-ring" width="85" height="85">
+                        <circle class="progress-ring__circle" stroke="#00f0ff" stroke-width="4" fill="transparent"
+                            r="39" cx="42.5" cy="42.5" stroke-dasharray="245" stroke-dashoffset="65" />
+                    </svg>
                     <img src="/images/logoUsuario.png" alt="Usuario" class="profile-pic">
-                </button>
-                <div class="profile-level">
-                    <span>Lvl 69</span>
+                </label>
+                <!-- Medallas -->
+                <div class="d-flex flex-column gap-1">
+                    <span class="badge-gold"><i class="fa-solid fa-medal"></i></span>
                 </div>
             </div>
 
-            <div class="ranking-section pt-2">
-                <button class="icon-btn"><img src="/images/ranking.png" alt="Ranking"></button>
-            </div>
-
-            <div class="rewards-section d-flex flex-column align-items-center">
-                <div class="rewards-icons d-flex align-items-center">
-                    <button class="icon-btn"><img src="/images/tokatokens.png" alt="Tokatokens"
-                            class="reward-icon"></button>
-                    <button class="icon-btn"><img src="/images/toKash.png" alt="ToKash" class="reward-icon"></button>
-                    <button class="icon-btn"><img src="/images/recompensas.png" alt="Recompensas"
-                            class="reward-icon"></button>
+            <!-- Contador de Monedas -->
+            <div class="coin-counter">
+                <div class="coin-icon-wrapper">
+                    <!-- Si tienes un icono más plano úsalo aquí -->
+                    <img src="/images/tokatokens.png" alt="Monedas" class="coin-icon">
+                </div>
+                <div class="coin-text">
+                    <span class="coin-amount">1,250</span>
+                    <span class="coin-label">Monedas</span>
+                </div>
+                <div class="coin-add">
+                    <i class="fa-solid fa-plus"></i>
                 </div>
             </div>
         </header>
 
-        <!-- Zona mensaje usuario y notificaciones -->
+        <!-- Texto Nivel flotante (ajustado sobre perfil) -->
+        <div class="level-text">Nivel 69</div>
+
+        <!-- SALUDO -->
         <section class="greeting-section d-flex justify-content-between align-items-center mt-3">
-            <h1 class="greeting-title">Hola User</h1>
-            <div class="notification-icon">
-                <button class="icon-btn"><img src="/images/logoNotificaciones.png" alt="Notificaciones"
-                        class="notification-icon"></button>
+            <div>
+                <h1 class="greeting-title">Hola User</h1>
+                <h2 class="question-subtitle mt-1">¿Qué quieres jugar hoy?</h2>
+            </div>
+            <div class="notification-glass">
+                <i class="fa-regular fa-bell"></i>
+                <div class="notification-dot"></div>
             </div>
         </section>
 
-        <!-- Zona mensaje toka2play -->
-        <div class="question-section mt-1">
-            <h2 class="question-subtitle">¿Qué toka jugar hoy?</h2>
+        <!-- AREA CENTRAL DONDE SE CAMBIA EL CONTENIDO -->
+        <div class="scrollable-content mt-2">
+
+            <!-- ====== SECCION: JUEGOS (Tab 1) ====== -->
+            <main class="content-overlay p-3 pt-0" id="minijuegos-section">
+                <!-- Reto Diario (Ahora como principal) -->
+                <section class="daily-challenge-section w-100 mt-4">
+                    <div class="glass-card d-flex align-items-center gap-3 p-4" style="min-height: 130px;">
+                        <img src="/images/logoArkanoid.png" alt="Arkanoid" class="daily-game-icon">
+                        <div class="daily-game-info flex-grow-1">
+                            <h4>Reto Diario: Arkanoid</h4>
+                            <p>Completa 1 nivel para ganar 100 coins 💰 extra</p>
+                            <div class="d-flex align-items-center gap-2 mt-2">
+                                <div class="progress flex-grow-1"
+                                    style="height: 6px; background-color: rgba(255,255,255,0.1); border-radius: 10px;">
+                                    <div class="progress-bar" role="progressbar"
+                                        style="width: 20%; background-color: var(--toka-cyan); border-radius: 10px;"
+                                        aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <span class="progress-text">1/5</span>
+                            </div>
+                        </div>
+                        <a href="/arkanoid" class="text-decoration-none"><button class="glass-btn ms-2">Ir al
+                                reto</button></a>
+                    </div>
+                </section>
+
+                <!-- Minijuegos Galería Horizontal -->
+                <section class="minigames-section w-100" style="margin-top: 60px;">
+                    <div class="section-title-box mb-3">
+                        <h3>Minijuegos</h3>
+                    </div>
+                    <div class="games-horizontal-scroll">
+                        <div class="game-item-glass">
+                            <div class="glass-badge badge-gold-small">x2 Monedas</div>
+                            <a href="/snake"><img src="/images/logoSnake.jpg" alt="Snake"></a>
+                            <span class="game-name">Snake</span>
+                        </div>
+                        <div class="game-item-glass">
+                            <div class="glass-badge badge-blue-small">Reto Activo</div>
+                            <a href="/arkanoid"><img src="/images/logoArkanoid.png" alt="Arkanoid"></a>
+                            <span class="game-name">Arkanoid</span>
+                        </div>
+                        <div class="game-item-glass">
+                            <div class="glass-badge badge-purple-small">Divertido</div>
+                            <a href="#"><img src="/images/logoDoodle.jpg" alt="Koala Adventure"></a>
+                            <span class="game-name">Koala</span>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <!-- ====== SECCION: TRIVIAS (Tab 2) ====== -->
+            <main class="content-overlay p-3" id="trivia-section">
+                <section class="game-of-week-section w-100 mt-2">
+                    <div class="section-title-box mb-2">
+                        <h3>Trivia semanal</h3>
+                    </div>
+                    <div class="glass-card big-card position-relative">
+                        <img src="/images/triviaSemanal.png" alt="Trivia Semanal" class="game-cover">
+                    </div>
+                </section>
+
+                <section class="trivia-section mt-4 w-100">
+                    <div class="section-title-box mb-3">
+                        <h3>Opciones de Trivia</h3>
+                    </div>
+                    <div class="d-flex flex-column gap-3 mt-2">
+                        <div class="glass-card p-2 text-center border-0">
+                            <img src="/images/crearTrivia.png" alt="Crear Trivia" class="w-100 rounded"
+                                style="object-fit: cover;">
+                        </div>
+                        <div class="glass-card p-2 text-center border-0">
+                            <img src="/images/unirseTrivia.png" alt="Unirse Trivia" class="w-100 rounded"
+                                style="object-fit: cover;">
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <!-- ====== SECCION: TIENDA (Tab 3) ====== -->
+            <main class="content-overlay p-3" id="tienda-section">
+                <!-- Articulo Limitado -->
+                <section class="game-of-week-section w-100 mt-2">
+                    <div class="section-title-box mb-2">
+                        <h3>Artículo por tiempo limitado</h3>
+                    </div>
+                    <div class="glass-card big-card p-0">
+                        <img src="/images/iconoCajero.png" alt="Cajero" class="game-cover">
+                    </div>
+                </section>
+
+                <section class="tienda-section mt-4 w-100">
+                    <div class="section-title-box mb-3">
+                        <h3>Power Ups</h3>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                        <div class="glass-card p-2 text-center">
+                            <img src="/images/slowDown.png" alt="Slow Down" class="w-100 rounded">
+                        </div>
+                        <div class="glass-card p-2 text-center">
+                            <img src="/images/timeBonus.png" alt="Time Bonus" class="w-100 rounded">
+                        </div>
+                    </div>
+
+                    <div class="section-title-box mt-4 mb-3">
+                        <h3>Aspectos de Juegos</h3>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                        <div class="glass-card p-2 text-center">
+                            <img src="/images/crystalPaddle.png" alt="Crystal Paddle" class="w-100 rounded">
+                        </div>
+                        <div class="glass-card p-2 text-center">
+                            <img src="/images/NeonPaddle.png" alt="Neon Paddle" class="w-100 rounded">
+                        </div>
+                        <div class="glass-card p-2 text-center">
+                            <img src="/images/tokaTotalPaddle.png" alt="Toka Total Paddle" class="w-100 rounded">
+                        </div>
+                        <div class="glass-card p-2 text-center">
+                            <img src="/images/tokaDespensaPaddle.png" alt="Toka Despensa Paddle" class="w-100 rounded">
+                        </div>
+                        <div class="glass-card p-2 text-center">
+                            <img src="/images/tokaSnakeBody.png" alt="Snake Body" class="w-100 rounded">
+                        </div>
+                        <div class="glass-card p-2 text-center">
+                            <img src="/images/gemBall.png" alt="Gem Ball" class="w-100 rounded">
+                        </div>
+                        <div class="glass-card p-2 text-center" style="grid-column: span 2;">
+                            <img src="/images/controlNES.png" alt="Control NES" class="w-100 rounded">
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <!-- ====== SECCION: COMPETITIVO (Tab 4) ====== -->
+            <main class="content-overlay p-3" id="competitivo-section">
+                <!-- Juego destacado Competitivo -->
+                <section class="game-of-week-section w-100 mt-2">
+                    <div class="section-title-box mb-2">
+                        <h3>Competitivo de la Semana</h3>
+                    </div>
+                    <div class="glass-card big-card position-relative" style="height: 220px;">
+                        <a href="/snake"><img src="/images/logoSnake.jpg" alt="Snake Competitivo"
+                                class="game-cover"></a>
+                        <div class="glass-badge badge-exclusivo"
+                            style="top: 15px; right: 10px; font-size: 0.9rem; border-color: #ffd700; color: #ffd700; box-shadow: 0 0 10px #ffd700, inset 0 0 10px #ffd700;">
+                            🏆 TORNEO GLOBAL
+                        </div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <h4 style="font-weight: 500;">Ranked: Snake</h4>
+                        <p class="text-secondary" style="font-size: 0.9rem;">Compite esta semana para ganar <span
+                                style="color:#ffd700">500 Monedas Especiales</span> y subir tu rango global.</p>
+                        <a href="/snake"><button class="glass-btn mt-2 px-4 py-2"
+                                style="font-size: 1.1rem; border-color: #ffd700; color: #ffd700; box-shadow: 0 0 10px rgba(255,215,0,0.3);">Jugar
+                                y Rankear</button></a>
+                    </div>
+                </section>
+            </main>
+
+            <!-- ====== SECCION: PERFIL (Oculta, solo accesible via Avatar) ====== -->
+            <main class="content-overlay p-3 text-center d-flex flex-column justify-content-center align-items-center"
+                id="perfil-section" style="min-height: 400px;">
+                <div class="profile-avatar-wrapper" style="width: 120px; height: 120px; margin-bottom: 20px;">
+                    <svg class="progress-ring" width="120" height="120">
+                        <circle class="progress-ring__circle" stroke="#00f0ff" stroke-width="4" fill="transparent"
+                            r="56" cx="60" cy="60" stroke-dasharray="351" stroke-dashoffset="100" />
+                    </svg>
+                    <img src="/images/logoUsuario.png" alt="Usuario" class="profile-pic"
+                        style="width: 96px; height: 96px;">
+                </div>
+                <h3>User Profiler</h3>
+                <p class="text-secondary mt-2">Edita tu perfil, ve tu historial y configura tus opciones.</p>
+                <button class="glass-btn mt-3 px-4 py-2">Editar Perfil</button>
+            </main>
         </div>
 
-
-        <main class="content-overlay mt-3 d-flex flex-column flex-grow-1" id="minijuegos-section">
-
-            <!-- Juego de la semana -->
-            <section class="game-of-week-section w-100">
-                <div class="section-title-box">
-                    <h3>Juego de la semana</h3>
-                </div>
-
-                <div class="featured-game-card">
-                    <img src="/images/logoSnake.jpg"
-                        alt="Snake"><!-- Aquí se muestra el juego de la semana, por ahora será este -->
-                </div>
-            </section>
-
-            <!-- Minijuegos -->
-            <section class="minigames-section mt-4 flex-grow-1 w-100 text-center">
-                <div class="section-title-box mb-3">
-                    <h3>Minijuegos</h3>
-                </div>
-                <div class="games-grid">
-                    <div class="game-item">
-                        <a href="/snake">
-                            <img src="/images/logoSnake.jpg" alt="Snake">
-                        </a>
-                    </div>
-                    <div class="game-item">
-                        <a href="/arkanoid">
-                            <img src="/images/logoArkanoid.png" alt="Arkanoid">
-                        </a>
-                    </div>
-
-                    <div class="game-item">
-                        <img src="/images/logoDoodle.jpg" alt="Doodle">
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <!-- Trivia semanal-->
-        <main class="content-overlay mt-3 d-flex flex-column flex-grow-1" id="trivia-section">
-
-            <!-- Trivia semanal -->
-            <section class="game-of-week-section w-100">
-                <div class="section-title-box">
-                    <h3>Trivia semanal</h3>
-                </div>
-
-                <div class="featured-trivia-card">
-                    <img src="/images/triviaSemanal.png" alt="Trivia Semanal">
-                    <!-- Aquí se muestra la trivia de la semana, al presionar debe mostrar su información y si ya está activa, dejar jugarla-->
-                </div>
-            </section>
-
-            <!-- Crear trivias -->
-            <section class="trivia-section mt-4 flex-grow-1 w-100 text-center">
-                <div class="section-title-box mb-3">
-                    <h3>Trivias</h3>
-                </div>
-                <div class="trivia-options-grid">
-                    <div class="trivia-option-item">
-                        <img src="/images/crearTrivia.png" alt="Crear Trivia">
-                    </div>
-                    <div class="trivia-option-item">
-                        <img src="/images/unirseTrivia.png" alt="Unirse Trivia">
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <!-- Tienda -->
-        <main class="content-overlay mt-3 d-flex flex-column flex-grow-1" id="tienda-section">
-
-            <!-- Articulo por tiempo limitado -->
-            <section class="game-of-week-section w-100">
-                <div class="section-title-box">
-                    <h3>Artículo por tiempo limitado</h3>
-                </div>
-
-                <div class="featured-tienda-limited-card">
-                    <img src="/images/iconoCajero.png" alt="Articulo por tiempo limitado">
-                    <!-- Aquí se muestra el articulo por tiempo limitado, al presionar debe dejar comprarlo-->
-                </div>
-            </section>
-
-            <!-- Articulos a comprar -->
-            <section class="tienda-section mt-4 flex-grow-1 w-100 text-center">
-                <div class="section-title-box mb-3">
-                    <h3>Artículos disponibles</h3>
-                </div>
-                <div class="tienda-options-grid">
-                    <div class="tienda-option-item">
-                        <img src="/images/crystalPaddle.png" alt="articulo1">
-                    </div>
-
-                    <div class="tienda-option-item">
-                        <img src="/images/controlNES.png" alt="articulo2">
-                    </div>
-
-                    <div class="tienda-option-item">
-                        <img src="/images/NeonPaddle.png" alt="articulo3">
-                    </div>
-
-                    <div class="tienda-option-item">
-                        <img src="/images/slowDown.png" alt="articulo4">
-                    </div>
-
-                    <div class="tienda-option-item">
-                        <img src="/images/timeBonus.png" alt="articulo5">
-                    </div>
-
-                    <div class="tienda-option-item">
-                        <img src="/images/gemBall.png" alt="articulo6">
-                    </div>
-
-                    <div class="tienda-option-item">
-                        <img src="/images/tokaTotalPaddle.png" alt="articulo7">
-                    </div>
-
-                    <div class="tienda-option-item">
-                        <img src="/images/tokaDespensaPaddle.png" alt="articulo8">
-                    </div>
-
-                    <div class="tienda-option-item">
-                        <img src="/images/tokaSnakeBody.png" alt="articulo9">
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <!-- Barra inferior -->
-        <nav class="bottom-nav">
-            <!-- Icono Minijuegos -->
-            <label for="tab-minijuegos" class="nav-btn m-0">
-                <img src="/images/logoMinijuegos.png" alt="Minijuegos">
+        <!-- BARRA INFERIOR DE NAVEGACION -->
+        <nav class="bottom-glass-nav">
+            <label for="tab-minijuegos" class="nav-item">
+                <i class="fa-solid fa-gamepad nav-icon"></i>
+                <span class="nav-label">Juegos</span>
             </label>
-
-            <!-- Icono Tienda -->
-            <div class="main-nav-btn-wrapper">
-                <label for="tab-tienda" class="nav-btn main-nav-btn m-0">
-                    <div class="nav-center-bump">
-                        <img src="/images/logoTienda.png" alt="Tienda">
-                    </div>
-                </label>
-            </div>
-
-            <!-- Icono Trivias -->
-            <label for="tab-trivias" class="nav-btn m-0">
-                <img src="/images/logoTrivias.png" alt="Trivias">
+            <label for="tab-tienda" class="nav-item">
+                <i class="fa-solid fa-store nav-icon"></i>
+                <span class="nav-label">Tienda</span>
+            </label>
+            <label for="tab-trivias" class="nav-item">
+                <i class="fa-solid fa-dice nav-icon"></i> <!-- Ícono de Trivias -->
+                <span class="nav-label">Trivias</span>
+            </label>
+            <label for="tab-competitivo" class="nav-item">
+                <i class="fa-solid fa-trophy nav-icon"></i>
+                <span class="nav-label">Competitivo</span>
             </label>
         </nav>
 
     </div>
+
+    <!-- Script para Efecto 3D de Carrusel Bidireccional -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const carousel = document.querySelector('.games-horizontal-scroll');
+            const items = carousel.querySelectorAll('.game-item-glass');
+
+            function updateCarousel() {
+                const center = carousel.scrollLeft + carousel.clientWidth / 2;
+
+                items.forEach(item => {
+                    const itemCenter = item.offsetLeft + item.clientWidth / 2;
+                    let distance = itemCenter - center;
+                    // Max distance is roughly half container view
+                    let maxDistance = carousel.clientWidth / 1.5;
+
+                    // Normalize distance from -1 to 1 based on position
+                    let normalized = Math.max(-1, Math.min(1, distance / maxDistance));
+
+                    // Calculate rotation and scale
+                    const rotateY = normalized * 50; // Rotate up to 50 degrees
+                    const scale = 1 - Math.abs(normalized) * 0.2; // Scale down 20%
+                    const zIndex = Math.round(100 - Math.abs(normalized) * 100);
+
+                    item.style.transform = `perspective(1000px) rotateY(${rotateY}deg) scale(${scale})`;
+                    item.style.zIndex = zIndex;
+                    item.style.opacity = 1 - Math.abs(normalized) * 0.4;
+                });
+            }
+
+            carousel.addEventListener('scroll', updateCarousel);
+            window.addEventListener('resize', updateCarousel);
+
+            // Initial call
+            setTimeout(() => {
+                if (items.length > 1) {
+                    // Start correctly centered
+                    carousel.scrollLeft = items[1].offsetLeft - (carousel.clientWidth / 2) + (items[1].clientWidth / 2);
+                }
+                updateCarousel();
+            }, 100);
+        });
+    </script>
 </body>
 
 </html>
