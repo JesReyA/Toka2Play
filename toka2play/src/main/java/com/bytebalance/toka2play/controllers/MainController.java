@@ -8,16 +8,16 @@ public class MainController {
 
     @GetMapping("/")
     public String index() {
-        return "redirect:/MainApp/index.html";
+        return "redirect:/index.html";
     }
 
     @GetMapping("/arkanoid")
     public String arkanoid() {
-        return "redirect:/minijuegos/arkanoid/arkanoid.html";
+        return "redirect:/arkanoid.html";
     }
 
     @GetMapping("/snake")
     public String snake() {
-        return "redirect:/minijuegos/snake/snake.html";
+        return "redirect:/snake.html";
     }
 }
