@@ -22,4 +22,13 @@ public class MainController {
 
     @GetMapping("/minijuegos/tokoala")
     public String tokoala() { return "/minijuegos/tokoala"; }
+
+    @GetMapping("/trivias/creacion")
+    public String creacion() { return "/trivias/creacion"; }
+
+    @GetMapping("/trivias/unirse")
+    public String unirse() { return "/trivias/unirse"; }
+
+    @GetMapping("/trivias/contestando")
+    public String contestando() { return "/trivias/triviaAContestar"; }
 }
