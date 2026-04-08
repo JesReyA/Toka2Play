@@ -277,28 +277,21 @@
 
         <!-- MODAL RANKING -->
         <div id="modal-ranking" class="glass-modal">
-            <div class="modal-content-glass">
-                <i class="fa-solid fa-xmark close-btn-glass" onclick="closeModal('modal-ranking')"></i>
-                <h3 class="modal-title"><i class="fa-solid fa-trophy" style="color: #ffd700;"></i> Ranking</h3>
-                <div class="ranking-item">
-                    <span><b style="color: #ffd700;">#1</b> PlayerOne</span>
-                    <span>45,200 pts</span>
-                </div>
-                <div class="ranking-item">
-                    <span><b style="color: #c0c0c0;">#2</b> ProGamer99</span>
-                    <span>38,100 pts</span>
-                </div>
-                <div class="ranking-item">
-                    <span><b style="color: #cd7f32;">#3</b> Alex123</span>
-                    <span>32,050 pts</span>
-                </div>
-                <hr style="border-color: rgba(255,255,255,0.2);">
-                <div class="ranking-item is-me">
-                    <span><b>#42</b> User (Tú)</span>
-                    <span>1,250 pts</span>
-                </div>
+    <div class="modal-content-glass">
+        <i class="fa-solid fa-xmark close-btn-glass" onclick="closeModal('modal-ranking')"></i>
+        <h3 class="modal-title"><i class="fa-solid fa-trophy" style="color: #ffd700;"></i> Ranking</h3>
+        
+        <select id="gameSelector" onchange="fetchRanking(this.value)" 
+                style="width: 100%; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 8px; margin-bottom: 15px; border-radius: 8px;">
+            <option value="1">Snake</option>
+            <option value="2">Doodle</option>
+            <option value="3">Arkanoid</option>
+        </select>
+
+        <div id="ranking-list">
             </div>
-        </div>
+    </div>
+</div>
 
         <!-- MODAL MONEDAS -->
         <div id="modal-monedas" class="glass-modal">
@@ -415,6 +408,38 @@
                 event.target.classList.remove('show');
             }
         });
+    </script>
+    <script>
+        function fetchRanking(idJuego) {
+    const container = document.getElementById('ranking-list');
+    
+    fetch(`/api/leaderboard/${idJuego}`)
+        .then(response => response.json())
+        .then(data => {
+            container.innerHTML = ""; 
+
+            if (data.length === 0) {
+                container.innerHTML = '<p style="color: white; text-align: center; opacity: 0.6;">Sin registros todavía.</p>';
+                return;
+            }
+
+            data.forEach((item, index) => {
+                const pos = index + 1;
+                let color = (pos === 1) ? "#ffd700" : (pos === 2) ? "#c0c0c0" : (pos === 3) ? "#cd7f32" : "white";
+
+                container.innerHTML += `
+                    <div class="ranking-item">
+                        <span><b style="color: ${color};">#${pos}</b> ${item.nombre}</span>
+                        <span>${item.puntaje.toLocaleString()} pts</span>
+                    </div>
+                `;
+            });
+        })
+        .catch(err => console.error("Error al obtener el ranking:", err));
+}
+
+// Asegúrate de que al abrir el modal se dispare la carga:
+// En tu función que abre el modal, añade: fetchRanking(1);
     </script>
 </body>
 
