@@ -19,4 +19,7 @@ public class MainController {
 
     @GetMapping("/minijuegos/doodle")
     public String doodle() { return "/minijuegos/paginalnicioMiniApp"; }
+
+    @GetMapping("/minijuegos/tokoala")
+    public String tokoala() { return "/minijuegos/tokoala"; }
 }
