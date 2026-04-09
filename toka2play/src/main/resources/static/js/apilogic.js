@@ -82,12 +82,8 @@ const TokaApi = (() => {
     // /v1/user/info
     const getUserInfo = async (authCodes) => {
         if (authCodes[0] && authCodes[0].startsWith("mock")) {
-            return {
-                nickName: "Toka Fan",
-                avatar: "https://i.pravatar.cc/150?img=11",
-                firstName: "Usuario",
-                lastName: "Mock"
-            };
+            // Retorna un objeto vacío para que tú puedas controlar los datos desde HTML o inyectar tu propio usuario
+            return {};
         }
 
         try {
