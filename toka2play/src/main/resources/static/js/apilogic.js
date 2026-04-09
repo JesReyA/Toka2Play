@@ -215,6 +215,7 @@ const TokaApi = (() => {
             const loadingScreen = document.getElementById('toka-loading-screen');
             if(loadingScreen) {
                 loadingScreen.classList.add('hidden');
+                sessionStorage.setItem('toka_app_initialized', 'true');
             }
         }
     };
@@ -247,6 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if(loadingScreen && !loadingScreen.classList.contains('hidden')) {
             console.warn("La pantalla de carga fue escondida forzosamente por tiempo agotado.");
             loadingScreen.classList.add('hidden');
+            sessionStorage.setItem('toka_app_initialized', 'true');
         }
     }, 4500);
 });

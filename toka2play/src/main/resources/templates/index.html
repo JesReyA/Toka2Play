@@ -29,6 +29,12 @@
         <div id="toka-loading-screen">
             <img src="/images/logotoka.png" alt="Cargando Toka2Play..." class="loading-logo">
         </div>
+        <script>
+            // Si ya cargó alguna vez en esta sesión, lo escondemos inmediatamente para no molestar
+            if (sessionStorage.getItem('toka_app_initialized') === 'true') {
+                document.getElementById('toka-loading-screen').style.display = 'none';
+            }
+        </script>
 
         <!-- Pestañas de estado invisible -->
         <input type="radio" name="main-tabs" id="tab-minijuegos" class="d-none" checked>
