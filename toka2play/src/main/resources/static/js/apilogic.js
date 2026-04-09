@@ -10,15 +10,25 @@ const TokaApi = (() => {
     // Helper: Wrapper for Alipay JSAPI
     const getAuthCode = (method, scopes) => {
         return new Promise((resolve, reject) => {
+            // Protección: Si Alipay tarda más de 5 segundos, rompemos la promesa para no dejar la pantalla cargando por siempre
+            const timeout = setTimeout(() => reject(`Timeout pidiendo el código: ${method}`), 5000);
+
             if (window.AlipayJSBridge) {
                 window.AlipayJSBridge.call(`getUser${method}AuthCode`, {
                     usage: 'Se utilizará para identificar tu perfil y crear tus transacciones',
                     scopes: scopes,
-                    success: res => resolve(res.authcode || res.authCode),
-                    fail: err => reject(err)
+                    success: res => {
+                        clearTimeout(timeout);
+                        resolve(res.authcode || res.authCode);
+                    },
+                    fail: err => {
+                        clearTimeout(timeout);
+                        reject(err);
+                    }
                 });
             } else {
                 // Mock behavior for desktop browser preview
+                clearTimeout(timeout);
                 console.warn(`AlipayJSBridge no encontrado. Retornando Mock AuthCode para ${method}.`);
                 resolve(`mock_${method}_code`);
             }
@@ -200,6 +210,12 @@ const TokaApi = (() => {
             console.log("Toka2Play Inicializado exitosamente.", userInfo);
         } catch (err) {
             console.error("Fallo la inicialización de Alipay Identity:", err);
+        } finally {
+            // Apagar la pantalla de carga suavemente
+            const loadingScreen = document.getElementById('toka-loading-screen');
+            if(loadingScreen) {
+                loadingScreen.classList.add('hidden');
+            }
         }
     };
 
@@ -219,9 +235,18 @@ document.addEventListener("DOMContentLoaded", () => {
         // En Alipay a veces el Bridge se inyecta asincronamente
         document.addEventListener('AlipayJSBridgeReady', TokaApi.initializeUser, false);
 
-        // Timeout como fallback: Si tras 500ms no hay Bridge, inicializar en modo Mock (PC Test)
+        // Timeout como fallback: Si tras 800ms no hay Bridge, inicializar en modo Mock (PC Test)
         setTimeout(() => {
             if (!window.AlipayJSBridge) TokaApi.initializeUser();
-        }, 500);
+        }, 800);
     }
+
+    // SALVAVIDAS GLOBAL: Asegurar que sin importar qué pase, después de 4 segundos se esconda la carga
+    setTimeout(() => {
+        const loadingScreen = document.getElementById('toka-loading-screen');
+        if(loadingScreen && !loadingScreen.classList.contains('hidden')) {
+            console.warn("La pantalla de carga fue escondida forzosamente por tiempo agotado.");
+            loadingScreen.classList.add('hidden');
+        }
+    }, 4500);
 });
