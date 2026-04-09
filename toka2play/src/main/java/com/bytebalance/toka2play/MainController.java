@@ -1,13 +1,26 @@
 package com.bytebalance.toka2play;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.bytebalance.toka2play.models.Usuario;
+import com.bytebalance.toka2play.repository.UsuarioRepository;
 
 @Controller
 public class MainController {
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
     @GetMapping({"/", "/index"})
-    public String index() {
+    public String index(Model model) {
+        Usuario usuario = usuarioRepository.findById(1).orElse(null);
+        int nivel = usuarioRepository.calcularNivel(1);
+        
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("nivel", nivel); 
         return "index";
     }
 
