@@ -52,7 +52,7 @@
                         <circle class="progress-ring__circle" stroke="#00f0ff" stroke-width="4" fill="transparent"
                             r="39" cx="42.5" cy="42.5" stroke-dasharray="245" stroke-dashoffset="65" />
                     </svg>
-                    <img src="/images/logoUsuario.png" alt="Usuario" class="profile-pic">
+                    <img src="/images/imagenUsuario.jpeg" alt="Usuario" class="profile-pic">
                 </label>
                 <!-- Medallas -->
                 <div class="d-flex flex-column gap-1">
@@ -68,7 +68,7 @@
                     <img src="/images/tokatokens.png" alt="Monedas" class="coin-icon">
                 </div>
                 <div class="coin-text">
-                    <span class="coin-amount">1,250</span>
+                    <span class="coin-amount" th:text="${usuario != null ? #numbers.formatDecimal(usuario.saldo, 0, 'COMMA', 0, 'POINT') : '1,250'}">1,250</span>
                     <span class="coin-label">Monedas</span>
                 </div>
                 <div class="coin-add">
@@ -78,12 +78,12 @@
         </header>
 
         <!-- Texto Nivel flotante (ajustado sobre perfil) -->
-        <div class="level-text">Nivel 69</div>
+        <div class="level-text" th:text="'Nivel ' + (${nivel != null ? nivel : '69'})">Nivel 69</div>
 
         <!-- SALUDO -->
         <section class="greeting-section d-flex justify-content-between align-items-center mt-3">
             <div>
-                <h1 id="user-nickname" class="greeting-title">Hola User</h1>
+                <h1 class="greeting-title">Hola User</h1>
                 <h2 class="question-subtitle mt-1">¿Qué quieres jugar hoy?</h2>
             </div>
             <div class="notification-glass" onclick="openModal('modal-notificaciones')">
@@ -267,10 +267,10 @@
                         <circle class="progress-ring__circle" stroke="#00f0ff" stroke-width="4" fill="transparent"
                             r="56" cx="60" cy="60" stroke-dasharray="351" stroke-dashoffset="100" />
                     </svg>
-                    <img src="/images/logoUsuario.png" alt="Usuario" class="profile-pic"
+                    <img src="/images/imagenUsuario.jpeg" alt="Usuario" class="profile-pic"
                         style="width: 96px; height: 96px;">
                 </div>
-                <h3>User Profiler</h3>
+                <h3 th:text="${usuario != null ? usuario.nombre : 'User Profiler'}">User Profiler</h3>
                 <p class="text-secondary mt-2">Edita tu perfil, ve tu historial y configura tus opciones.</p>
                 <button class="glass-btn mt-3 px-4 py-2">Editar Perfil</button>
             </main>
@@ -324,7 +324,7 @@
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <h5 class="m-0 d-flex align-items-center gap-2"><img src="/images/tokatokens.png" width="20">
                             Toka Tokens</h5>
-                        <b style="font-size: 1.2rem;">1,250</b>
+                        <b style="font-size: 1.2rem;" th:text="${usuario != null ? #numbers.formatDecimal(usuario.saldo, 0, 'COMMA', 0, 'POINT') : '1,250'}">1,250</b>
                     </div>
                     <button class="glass-btn w-100 mb-2 mt-1" onclick="TokaApi.buyTokaTokens()"
                         style="font-size: 0.8rem; border-color: #00f0ff; color: #00f0ff; box-shadow: 0 0 10px rgba(0,240,255,0.3);"><i
