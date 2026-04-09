@@ -22,6 +22,7 @@ public class TriviaController {
         String nombre = payload.getOrDefault("nombre", "Trivia");
         String categoria = payload.getOrDefault("categoria", "cultura general");
         String dificultad = payload.getOrDefault("dificultad", "Fácil");
+        String codigoFrontend = payload.get("codigo");
         int cantidad;
         try {
             cantidad = Integer.parseInt(payload.getOrDefault("cantidad", "10"));
@@ -30,7 +31,7 @@ public class TriviaController {
         }
 
         try {
-            Map<String, Object> result = triviaAiService.generarTriviaSolo(nombre, categoria, cantidad, dificultad);
+            Map<String, Object> result = triviaAiService.generarTriviaSolo(nombre, categoria, cantidad, dificultad, codigoFrontend);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.internalServerError()
@@ -49,6 +50,20 @@ public class TriviaController {
         try {
             triviaAiService.guardarTrivia(payload.codigo, payload.nombre, payload.questions);
             return ResponseEntity.ok(Map.of("message", "Trivia guardada exitosamente en la base de datos"));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    @GetMapping("/{codigo}")
+    public ResponseEntity<?> obtenerTrivia(@PathVariable String codigo) {
+        try {
+            Map<String, Object> triviaData = triviaAiService.obtenerTrivia(codigo);
+            if (triviaData != null) {
+                return ResponseEntity.ok(triviaData);
+            } else {
+                return ResponseEntity.status(404).body(Map.of("error", "La trivia con código " + codigo + " no existe."));
+            }
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(Map.of("error", e.getMessage()));
         }

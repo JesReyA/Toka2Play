@@ -67,9 +67,15 @@ public class TriviaAiService {
     @org.springframework.beans.factory.annotation.Autowired
     private com.bytebalance.toka2play.repository.TriviaRepository triviaRepository;
 
-    public Map<String, Object> generarTriviaSolo(String nombre, String categoria, int cantidad, String dificultad) {
+    public Map<String, Object> generarTriviaSolo(String nombre, String categoria, int cantidad, String dificultad, String codigoFrontend) {
         TriviaResponse triviaResponse = generarPreguntasConIA(categoria, cantidad, dificultad);
-        String idTrivia = generarCodigoSala();
+        
+        String idTrivia = (codigoFrontend != null && !codigoFrontend.isEmpty()) ? codigoFrontend : generarCodigoSala();
+        while (triviaRepository.existsById(idTrivia)) {
+            idTrivia = generarCodigoSala();
+        }
+
+        guardarTrivia(idTrivia, nombre, triviaResponse.questions);
 
         return Map.of(
                 "codigo", idTrivia,
@@ -89,6 +95,30 @@ public class TriviaAiService {
         com.bytebalance.toka2play.models.Trivia trivia = new com.bytebalance.toka2play.models.Trivia(idTrivia, nombre,
                 preguntas);
         triviaRepository.save(trivia);
+    }
+
+    public Map<String, Object> obtenerTrivia(String codigo) {
+        return triviaRepository.findById(codigo).map(trivia -> {
+            List<TriviaResponse.Question> questions = trivia.getPreguntas().stream().map(p -> {
+                TriviaResponse.Question q = new TriviaResponse.Question();
+                q.pregunta = p.getDescripcion();
+                q.opciones = new java.util.ArrayList<>();
+                for (int i = 0; i < p.getRespuestas().size(); i++) {
+                    com.bytebalance.toka2play.models.Respuesta r = p.getRespuestas().get(i);
+                    q.opciones.add(r.getDescripcion());
+                    if (r.isEsCorrecta()) {
+                        q.correcta = i;
+                    }
+                }
+                return q;
+            }).collect(java.util.stream.Collectors.toList());
+
+            return Map.<String, Object>of(
+                    "codigo", trivia.getIdTrivia(),
+                    "nombre", trivia.getNombre(),
+                    "questions", questions
+            );
+        }).orElse(null);
     }
 
     private String generarCodigoSala() {
