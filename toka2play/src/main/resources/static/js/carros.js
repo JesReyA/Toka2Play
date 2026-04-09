@@ -148,6 +148,12 @@ function endGame() {
         <p>Puntuación Final: ${player.score}</p>
         <p style="margin-top: 15px; font-size: 0.8rem;">Haz clic para reintentar</p>
     `;
+
+    fetch('/api/leaderboard/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idJuego: 4, idUsuario: 1, puntaje: player.score })
+    }).catch(e => console.error(e));
 }
 
 // Control táctil para móvil

@@ -73,7 +73,7 @@ function updateSnake() {
     snake.unshift(head);
 
     if (head.x === food.x && head.y === food.y) {
-        score += 10;
+        score += 100;
         checkLevelUp();
         document.getElementById('scoreVal').innerText = score;
         placeFood();
@@ -85,7 +85,7 @@ function updateSnake() {
 }
 
 function checkLevelUp() {
-    if (score > 0 && score % 50 === 0 && currentLevel < 15) {
+    if (score > 0 && score % 500 === 0 && currentLevel < 15) {
         currentLevel++;
         fps++;
         document.getElementById('levelVal').innerText = currentLevel;
@@ -96,11 +96,11 @@ function changeDir(newDir) {
     // Si el juego está pausado o ya cambiamos dirección en este frame, ignorar
     if (!gameRunning || !canChangeDirection) return;
 
-    switch(newDir) {
-        case 'up':    if(dy !== 1)  { dx = 0; dy = -1; canChangeDirection = false; } break;
-        case 'down':  if(dy !== -1) { dx = 0; dy = 1;  canChangeDirection = false; } break;
-        case 'left':  if(dx !== 1)  { dx = -1; dy = 0; canChangeDirection = false; } break;
-        case 'right': if(dx !== -1) { dx = 1; dy = 0;  canChangeDirection = false; } break;
+    switch (newDir) {
+        case 'up': if (dy !== 1) { dx = 0; dy = -1; canChangeDirection = false; } break;
+        case 'down': if (dy !== -1) { dx = 0; dy = 1; canChangeDirection = false; } break;
+        case 'left': if (dx !== 1) { dx = -1; dy = 0; canChangeDirection = false; } break;
+        case 'right': if (dx !== -1) { dx = 1; dy = 0; canChangeDirection = false; } break;
     }
 }
 
@@ -136,6 +136,12 @@ function showGameOver() {
         document.getElementById('highScoreVal').innerText = highScore;
     }
 
+    fetch('/api/leaderboard/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idJuego: 1, idUsuario: 1, puntaje: score })
+    }).catch(e => console.error(e));
+
     document.getElementById('finalScoreText').innerText = `Puntaje obtenido: ${score}`;
     document.getElementById('gameOverModal').style.display = "flex";
 }
@@ -159,10 +165,10 @@ function closeModal() {
 
 // 8. EVENTOS
 window.addEventListener("keydown", e => {
-    switch(e.key) {
-        case "ArrowUp":    changeDir('up'); break;
-        case "ArrowDown":  changeDir('down'); break;
-        case "ArrowLeft":  changeDir('left'); break;
+    switch (e.key) {
+        case "ArrowUp": changeDir('up'); break;
+        case "ArrowDown": changeDir('down'); break;
+        case "ArrowLeft": changeDir('left'); break;
         case "ArrowRight": changeDir('right'); break;
     }
 });

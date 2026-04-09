@@ -1,6 +1,7 @@
 package com.bytebalance.toka2play.repository;
 
-import com.bytebalance.toka2play.models.Usuario;
+import com.bytebalance.toka2play.models.Puntaje;
+import com.bytebalance.toka2play.models.PuntajeId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public interface PuntajeRepository extends JpaRepository<Usuario, Integer> {
+public interface PuntajeRepository extends JpaRepository<Puntaje, PuntajeId> {
     @Query(value = "SELECT u.nombre as nombre, p.puntaje as puntaje " +
             "FROM puntajes p " +
             "INNER JOIN usuario u ON p.idUsuario = u.idUsuario " +

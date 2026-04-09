@@ -136,6 +136,7 @@
         let leftPressed = false
         
         let isGameOver = false
+        let score = 0;
 
         //Mobile button elements
         const btnLeft = document.getElementById('btn-left');
@@ -225,6 +226,7 @@
                     if (isBallSameXAsBrick && isBallTouchingBrick) {
                         dy = -dy
                         currentBrick.status = brickStatus.broken
+                        score += 100
                     }
                 }
             }
@@ -251,6 +253,12 @@
             } else if (y + dy > canvas.height - ballRadius) {
                 isGameOver = true;
                 document.getElementById('gameOverScreen').classList.remove('d-none');
+                
+                fetch('/api/leaderboard/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ idJuego: 3, idUsuario: 1, puntaje: score })
+                }).catch(e => console.error(e));
             }
 
             //mover la pelota

@@ -110,8 +110,13 @@
             }
 
             // Detección de caída
-            if (tokoala.y > boardHeight) {
+            if (tokoala.y > boardHeight && !gameOver) {
                 gameOver = true;
+                fetch('/api/leaderboard/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ idJuego: 2, idUsuario: 1, puntaje: score })
+                }).catch(e => console.error(e));
             }
 
             context.drawImage(tokoala.img, tokoala.x, tokoala.y, tokoala.width, tokoala.height);
