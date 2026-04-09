@@ -101,7 +101,7 @@
                                 <span class="progress-text">1/5</span>
                             </div>
                         </div>
-                        <a href="/arkanoid" class="text-decoration-none"><button class="glass-btn ms-2">Ir al
+                        <a href="/minijuegos/arkanoid" class="text-decoration-none"><button class="glass-btn ms-2">Ir al
                                 reto</button></a>
                     </div>
                 </section>
@@ -127,6 +127,13 @@
                             <a href="/minijuegos/tokoala"><img src="/images/logoDoodle.jpg" alt="Koala Adventure"></a>
                             <span class="game-name">Koala</span>
                         </div>
+                        <div class="game-item-glass">
+                            <div class="glass-badge badge-purple-small"
+                                style="border-color: #ff4757; color: #ff4757; box-shadow: 0 0 10px rgba(255, 71, 87, 0.3);">
+                                Nuevo</div>
+                            <a href="/minijuegos/carros"><img src="/images/logoCarros.jpeg" alt="Carros"></a>
+                            <span class="game-name">Carros</span>
+                        </div>
                     </div>
                 </section>
             </main>
@@ -148,11 +155,11 @@
                     </div>
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;" class="mt-2">
                         <div class="glass-card p-2 text-center border-0">
-                            <a href="/trivias/creacion.html"><img src="/images/crearTrivia.png" alt="Crear Trivia"
+                            <a href="/trivias/creacion"><img src="/images/crearTrivia.png" alt="Crear Trivia"
                                     class="w-100 rounded" style="object-fit: cover;"></a>
                         </div>
                         <div class="glass-card p-2 text-center border-0">
-                            <a href="/trivias/unirse.html"> <img src="/images/unirseTrivia.png" alt="Unirse Trivia"
+                            <a href="/trivias/unirse"> <img src="/images/unirseTrivia.png" alt="Unirse Trivia"
                                     class="w-100 rounded" style="object-fit: cover;"></a>
                         </div>
                     </div>
@@ -221,7 +228,7 @@
                         <h3>Competitivo de la Semana</h3>
                     </div>
                     <div class="glass-card big-card position-relative" style="height: 220px;">
-                        <a href="/snake"><img src="/images/logoSnake.jpg" alt="Snake Competitivo"
+                        <a href="/minijuegos/snake"><img src="/images/logoSnake.jpg" alt="Snake Competitivo"
                                 class="game-cover"></a>
                         <div class="glass-badge badge-exclusivo"
                             style="top: 15px; right: 10px; font-size: 0.9rem; border-color: #ffd700; color: #ffd700; box-shadow: 0 0 10px #ffd700, inset 0 0 10px #ffd700;">
@@ -278,21 +285,21 @@
 
         <!-- MODAL RANKING -->
         <div id="modal-ranking" class="glass-modal">
-    <div class="modal-content-glass">
-        <i class="fa-solid fa-xmark close-btn-glass" onclick="closeModal('modal-ranking')"></i>
-        <h3 class="modal-title"><i class="fa-solid fa-trophy" style="color: #ffd700;"></i> Ranking</h3>
-        
-        <select id="gameSelector" onchange="fetchRanking(this.value)" 
-                style="width: 100%; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 8px; margin-bottom: 15px; border-radius: 8px;">
-            <option value="1">Snake</option>
-            <option value="2">Doodle</option>
-            <option value="3">Arkanoid</option>
-        </select>
+            <div class="modal-content-glass">
+                <i class="fa-solid fa-xmark close-btn-glass" onclick="closeModal('modal-ranking')"></i>
+                <h3 class="modal-title"><i class="fa-solid fa-trophy" style="color: #ffd700;"></i> Ranking</h3>
 
-        <div id="ranking-list">
+                <select id="gameSelector" onchange="fetchRanking(this.value)"
+                    style="width: 100%; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 8px; margin-bottom: 15px; border-radius: 8px;">
+                    <option value="1">Snake</option>
+                    <option value="2">Doodle</option>
+                    <option value="3">Arkanoid</option>
+                </select>
+
+                <div id="ranking-list">
+                </div>
             </div>
-    </div>
-</div>
+        </div>
 
         <!-- MODAL MONEDAS -->
         <div id="modal-monedas" class="glass-modal">
@@ -412,35 +419,33 @@
     </script>
     <script>
         function fetchRanking(idJuego) {
-    const container = document.getElementById('ranking-list');
-    
-    fetch(`/api/leaderboard/${idJuego}`)
-        .then(response => response.json())
-        .then(data => {
-            container.innerHTML = ""; 
+            const container = document.getElementById('ranking-list');
 
-            if (data.length === 0) {
-                container.innerHTML = '<p style="color: white; text-align: center; opacity: 0.6;">Sin registros todavía.</p>';
-                return;
-            }
+            fetch(`/api/leaderboard/${idJuego}`)
+                .then(response => response.json())
+                .then(data => {
+                    container.innerHTML = "";
 
-            data.forEach((item, index) => {
-                const pos = index + 1;
-                let color = (pos === 1) ? "#ffd700" : (pos === 2) ? "#c0c0c0" : (pos === 3) ? "#cd7f32" : "white";
+                    if (data.length === 0) {
+                        container.innerHTML = '<p style="color: white; text-align: center; opacity: 0.6;">Sin registros todavía.</p>';
+                        return;
+                    }
 
-                container.innerHTML += `
+                    data.forEach((item, index) => {
+                        const pos = index + 1;
+                        let color = (pos === 1) ? "#ffd700" : (pos === 2) ? "#c0c0c0" : (pos === 3) ? "#cd7f32" : "white";
+
+                        container.innerHTML += `
                     <div class="ranking-item">
                         <span><b style="color: ${color};">#${pos}</b> ${item.nombre}</span>
                         <span>${item.puntaje.toLocaleString()} pts</span>
                     </div>
                 `;
-            });
-        })
-        .catch(err => console.error("Error al obtener el ranking:", err));
-}
+                    });
+                })
+                .catch(err => console.error("Error al obtener el ranking:", err));
+        }
 
-// Asegúrate de que al abrir el modal se dispare la carga:
-// En tu función que abre el modal, añade: fetchRanking(1);
     </script>
     <script src="/js/Apilogic.js"></script>
 </body>

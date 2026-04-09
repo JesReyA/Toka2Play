@@ -16,5 +16,4 @@ public class Usuario {
     private String correo;
     private double saldo;
 
-    // Genera Getters y Setters (o usa @Data de Lombok si lo tienes configurado)
 }
