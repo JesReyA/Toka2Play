@@ -14,37 +14,53 @@ public class MainController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @GetMapping({"/", "/index"})
+    @GetMapping({ "/", "/index" })
     public String index(Model model) {
-        Usuario usuario = usuarioRepository.findById(1).orElse(null);
-        int nivel = usuarioRepository.calcularNivel(1);
-        
+        Usuario usuario = usuarioRepository.findById(3).orElse(null);
+        int nivel = usuarioRepository.calcularNivel(3);
+
         model.addAttribute("usuario", usuario);
-        model.addAttribute("nivel", nivel); 
+        model.addAttribute("nivel", nivel);
         return "index";
     }
 
     @GetMapping("/minijuegos/snake")
-    public String snake() { return "/minijuegos/snake"; }
+    public String snake() {
+        return "/minijuegos/snake";
+    }
 
     @GetMapping("/minijuegos/arkanoid")
-    public String arkanoid() { return "/minijuegos/arkanoid"; }
+    public String arkanoid() {
+        return "/minijuegos/arkanoid";
+    }
 
     @GetMapping("/minijuegos/doodle")
-    public String doodle() { return "/minijuegos/paginalnicioMiniApp"; }
+    public String doodle() {
+        return "/minijuegos/paginalnicioMiniApp";
+    }
 
     @GetMapping("/minijuegos/tokoala")
-    public String tokoala() { return "/minijuegos/tokoala"; }
+    public String tokoala() {
+        return "/minijuegos/tokoala";
+    }
 
     @GetMapping("/minijuegos/carros")
-    public String carros() { return "/minijuegos/carros"; }
+    public String carros() {
+        return "/minijuegos/carros";
+    }
 
     @GetMapping("/trivias/creacion")
-    public String creacion() { return "/trivias/creacion"; }
+    public String creacion() {
+        return "/trivias/creacion";
+    }
 
     @GetMapping("/trivias/unirse")
-    public String unirse() { return "/trivias/unirse"; }
+    public String unirse() {
+        return "/trivias/unirse";
+    }
 
     @GetMapping("/trivias/contestando")
-    public String contestando() { return "/trivias/triviaAContestar"; }
+    public String contestando() {
+        return "/trivias/triviaAContestar";
+    }
 }

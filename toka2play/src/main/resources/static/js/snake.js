@@ -139,7 +139,7 @@ function showGameOver() {
     fetch('/api/leaderboard/save', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ idJuego: 1, idUsuario: 1, puntaje: score })
+        body: JSON.stringify({ idJuego: 1, idUsuario: 3, puntaje: score })
     }).catch(e => console.error(e));
 
     document.getElementById('finalScoreText').innerText = `Puntaje obtenido: ${score}`;

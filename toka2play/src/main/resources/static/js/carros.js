@@ -152,7 +152,7 @@ function endGame() {
     fetch('/api/leaderboard/save', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ idJuego: 4, idUsuario: 1, puntaje: player.score })
+        body: JSON.stringify({ idJuego: 4, idUsuario: 3, puntaje: player.score })
     }).catch(e => console.error(e));
 }
 

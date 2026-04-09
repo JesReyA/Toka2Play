@@ -115,7 +115,7 @@
                 fetch('/api/leaderboard/save', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ idJuego: 2, idUsuario: 1, puntaje: score })
+                    body: JSON.stringify({ idJuego: 2, idUsuario: 3, puntaje: score })
                 }).catch(e => console.error(e));
             }
 
