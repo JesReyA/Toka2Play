@@ -16,7 +16,7 @@ import java.util.Map;
 @Service
 public class TriviaAiService {
 
-    @Value("${groq.api.key}")
+    @Value("${GROQ_API_KEY}")
     private String apiKey;
 
     private final String API_URL = "https://api.groq.com/openai/v1/chat/completions";
