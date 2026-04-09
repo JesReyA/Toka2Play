@@ -8,11 +8,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Toka2playApplication {
 
 	public static void main(String[] args) {
-		// Carga el archivo .env
 		Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
+		dotenv.entries().forEach(entry -> {
+			System.setProperty(entry.getKey(), entry.getValue());
+		});
 
-		// Inyecta las variables en el sistema de propiedades de Java
-		dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
+		// Línea de depuración:
+		System.out.println("DEBUG: Llave cargada -> " + System.getProperty("GROQ_API_KEY"));
 
 		SpringApplication.run(Toka2playApplication.class, args);
 	}
