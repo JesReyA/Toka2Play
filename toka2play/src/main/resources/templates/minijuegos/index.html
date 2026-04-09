@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, inicial-scale=1.0, user-scalable=no">
+    <title>Tokoala Jump</title>
+    <link rel="stylesheet" href="/css/tokoalaJump.css">
+</head>
+<body>
+<div id="controls">
+    <button class="btn-control" onclick="setControlMode('buttons')">Modo Táctil (L/R)</button>
+    <button id="gyroBtn" class="btn-control" onclick="setControlMode('gyro')">Modo Giroscopio</button>
+    <button class="btn-control btn-pause" onclick="togglePause()">Pausar/Reanudar (P)</button>
+</div>
+
+<canvas id="board"></canvas>
+
+<script src="/js/Tokoala.js"></script>
+</body>
+</html>
