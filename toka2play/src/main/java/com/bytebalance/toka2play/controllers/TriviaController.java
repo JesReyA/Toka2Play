@@ -68,4 +68,36 @@ public class TriviaController {
             return ResponseEntity.internalServerError().body(Map.of("error", e.getMessage()));
         }
     }
+
+    @Autowired
+    private com.bytebalance.toka2play.repository.PuntajeTriviaRepository puntajeTriviaRepository;
+
+    public static class SavePuntajePayload {
+        public String codigo;
+        public int idUsuario;
+        public int puntaje;
+    }
+
+    @PostMapping("/puntaje")
+    public ResponseEntity<?> guardarPuntaje(@RequestBody SavePuntajePayload payload) {
+        try {
+            com.bytebalance.toka2play.models.PuntajeTriviaId id = new com.bytebalance.toka2play.models.PuntajeTriviaId(payload.codigo, payload.idUsuario);
+            
+            java.util.Optional<com.bytebalance.toka2play.models.PuntajeTrivia> existingScore = puntajeTriviaRepository.findById(id);
+            if (existingScore.isPresent()) {
+                com.bytebalance.toka2play.models.PuntajeTrivia pt = existingScore.get();
+                if (payload.puntaje > pt.getPuntaje()) {
+                    pt.setPuntaje(payload.puntaje);
+                    puntajeTriviaRepository.save(pt);
+                }
+            } else {
+                com.bytebalance.toka2play.models.PuntajeTrivia pt = new com.bytebalance.toka2play.models.PuntajeTrivia(id, payload.puntaje);
+                puntajeTriviaRepository.save(pt);
+            }
+            
+            return ResponseEntity.ok(Map.of("message", "Puntaje procesado exitosamente"));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(Map.of("error", e.getMessage()));
+        }
+    }
 }

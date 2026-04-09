@@ -316,7 +316,7 @@
                 <!-- Estadísticas de la partida en vivo -->
                 <div class="stats-row">
                     <div class="stat-pill">Puntos: <span id="puntos-text">0</span></div>
-                    <div class="stat-pill">Racha: <span id="racha-text">0x</span></div>
+                    <div class="stat-pill">Racha: <span id="racha-text">x0</span></div>
                 </div>
 
             </div>
@@ -332,6 +332,7 @@
         
         let indexActual = 0;
         let puntos = 0;
+        let bestScore = 0;
         let racha = 0;
         
         let timerInterval;
@@ -392,7 +393,7 @@
         
         function actualizarUIStats() {
             document.getElementById('puntos-text').textContent = puntos;
-            document.getElementById('racha-text').textContent = racha + "x";
+            document.getElementById('racha-text').textContent = "x" + racha;
         }
         
         function iniciarContador() {
@@ -463,33 +464,34 @@
                     <h2 class="text-white mb-4">¡Trivia Finalizada!</h2>
                     <h1 style="color: #00f0ff; font-size: 3rem; margin-bottom: 20px;">${puntos} PTS</h1>
                     <p class="text-white mb-4">Has respondido ${preguntas.length} preguntas.</p>
-                    <button class="btn btn-outline-info text-white me-2 mt-2" onclick="guardarTriviaYSalir()">Guardar Trivia en DB y Salir</button>
                     <button class="btn btn-outline-light mt-2" onclick="window.location.href='/'">Volver al Inicio</button>
                 </div>
             `;
+            guardarPuntajeYSalir();
         }
         
-        async function guardarTriviaYSalir() {
+        async function guardarPuntajeYSalir() {
             try {
-                const response = await fetch('/api/trivia/save', {
+                if (puntos > bestScore) {
+                    bestScore = puntos;
+                }
+                const response = await fetch('/api/trivia/puntaje', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         codigo: codigoTrivia,
-                        nombre: nombreTrivia,
-                        questions: preguntas
+                        idUsuario: 1, // Usuario con ID 1 hardcodeado de momento por no haber login
+                        puntaje: bestScore
                     })
                 });
                 if (response.ok) {
-                    alert('Trivia guardada correctamente para que otros se unan.');
                 } else {
-                    alert('Error al guardar la trivia.');
+                    alert('Error al guardar el puntaje.');
                 }
             } catch (err) {
                 console.error(err);
                 alert('Ocurrió un error: ' + err.message);
             }
-            window.location.href = '/';
         }
     </script>
 </body>
