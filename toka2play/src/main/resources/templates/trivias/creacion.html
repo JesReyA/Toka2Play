@@ -324,6 +324,23 @@
     <script>
         let dificultadSeleccionada = 'Fácil';
 
+        function generateRandomCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = '#';
+            for (let i = 0; i < 3; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            code += '-';
+            for (let i = 0; i < 3; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('roomCodeText').innerText = generateRandomCode();
+        });
+
         function updateSlider() {
             const slider = document.getElementById('preguntas-slider');
             const val = slider.value;
@@ -369,10 +386,11 @@
             errorMsg.style.display = 'none';
 
             try {
+                const codigoGenerado = document.getElementById('roomCodeText').innerText;
                 const response = await fetch('/api/trivia/generate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ nombre, categoria, cantidad: String(cantidad), dificultad })
+    body: JSON.stringify({ nombre, categoria, cantidad: String(cantidad), dificultad, codigo: codigoGenerado })
 });
 
 const data = await response.json();

@@ -132,7 +132,9 @@
                 
                 <p class="trivia-help-text">Pídele el código a tu Game Master o amigo.</p>
 
-                <button class="btn-submit-trivia">UNIRSE A TRIVIA</button>
+                <div id="error-msg" style="display:none; color: #ff4757; margin-bottom: 15px; font-weight: 500; font-size: 0.95rem;"></div>
+
+                <button class="btn-submit-trivia" onclick="unirseTrivia()">UNIRSE A TRIVIA</button>
                 
             </div>
 
@@ -146,6 +148,46 @@
         codeInput.addEventListener('input', function() {
             this.value = this.value.toUpperCase();
         });
+
+        async function unirseTrivia() {
+            const code = codeInput.value.trim();
+            const errorMsg = document.getElementById('error-msg');
+            const submitBtn = document.querySelector('.btn-submit-trivia');
+
+            if (!code) {
+                errorMsg.textContent = 'Por favor, ingresa un código válido.';
+                errorMsg.style.display = 'block';
+                return;
+            }
+
+            errorMsg.style.display = 'none';
+            submitBtn.textContent = 'BUSCANDO TRIVIA...';
+            submitBtn.disabled = true;
+
+            try {
+                // El código incluye #, así que hay que codificar la URI para enviarlo como path param
+                const response = await fetch('/api/trivia/' + encodeURIComponent(code));
+                const data = await response.json();
+
+                if (!response.ok || data.error) {
+                    throw new Error(data.error || 'Código incorrecto o trivia inexistente.');
+                }
+
+                // Guardar la información en la sesión y redirigir
+                sessionStorage.setItem('triviaQuestions', JSON.stringify(data.questions));
+                sessionStorage.setItem('triviaNombre', data.nombre);
+                sessionStorage.setItem('triviaCodigo', data.codigo);
+
+                window.location.href = '/trivias/contestando';
+
+            } catch(err) {
+                errorMsg.textContent = "⚠️ " + err.message;
+                errorMsg.style.display = 'block';
+            } finally {
+                submitBtn.textContent = 'UNIRSE A TRIVIA';
+                submitBtn.disabled = false;
+            }
+        }
     </script>
 </body>
 </html>
