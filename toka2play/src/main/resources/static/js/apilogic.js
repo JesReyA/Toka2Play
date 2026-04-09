@@ -164,8 +164,15 @@ const TokaApi = (() => {
                     }
                 });
             } else {
-                // Flujo Local de prueba
-                alert(`[ENTORNO DE PRUEBA] Solicitud de pago Alipay iniciada.\n\nMonto: $${amount} ${currency}\nTítulo: ${title}\n(Operación simulada con éxito).`);
+                // Flujo Local (Diseño integrado a la app)
+                const modalPago = document.getElementById('modal-pago-alipay');
+                if(modalPago) {
+                    document.getElementById('alipay-modal-title').textContent = title;
+                    document.getElementById('alipay-modal-amount').textContent = `$${amount} ${currency}`;
+                    modalPago.classList.add('show');
+                } else {
+                    alert(`Orden Procesada\nMonto: $${amount} ${currency}`);
+                }
             }
         } catch (err) {
             console.error("Error en el flujo de pago:", err);

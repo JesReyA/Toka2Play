@@ -375,6 +375,29 @@
             </div>
         </div>
 
+        <!-- MODAL PAGO ALIPAY -->
+        <div id="modal-pago-alipay" class="glass-modal">
+            <div class="modal-content-glass" style="text-align: center;">
+                <i class="fa-solid fa-xmark close-btn-glass" onclick="closeModal('modal-pago-alipay')"></i>
+                <h3 class="modal-title justify-content-center" style="margin-bottom: 10px;"><i class="fa-solid fa-shield-halved" style="color: #0ff;"></i> Autorización de Pago</h3>
+                
+                <img src="/images/logotoka.png" alt="Toka" style="width: 80px; margin: 10px 0 15px 0; filter: drop-shadow(0 0 8px rgba(0,240,255,0.5));">
+                
+                <h4 id="alipay-modal-title" style="font-weight: 500; font-size: 1.1rem; color: #fff;">Orden de Compra</h4>
+                
+                <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 12px; padding: 15px; margin: 15px 0; box-shadow: inset 0 0 10px rgba(0,240,255,0.05);">
+                    <span style="font-size: 0.9rem; color: #a0c4d8;">Total a Pagar</span>
+                    <h2 id="alipay-modal-amount" style="color: #00f0ff; margin: 5px 0 0 0; text-shadow: 0 0 8px rgba(0,240,255,0.4);">$0 MXN</h2>
+                </div>
+                
+                <p class="text-secondary" style="font-size: 0.85rem; margin-bottom: 20px;">
+                    Operación protegida y cifrada de extremo a extremo.
+                </p>
+                
+                <button class="glass-btn w-100" onclick="closeModal('modal-pago-alipay')" style="font-size: 1rem; padding: 10px; background: rgba(0,240,255,0.15); border-color: #00f0ff;"><i class="fa-solid fa-fingerprint me-2"></i> Autorizar Transacción</button>
+            </div>
+        </div>
+
     </div>
 
     <!-- Script para Efecto 3D de Carrusel Bidireccional -->
