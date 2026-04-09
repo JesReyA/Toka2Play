@@ -72,7 +72,7 @@
         <!-- SALUDO -->
         <section class="greeting-section d-flex justify-content-between align-items-center mt-3">
             <div>
-                <h1 class="greeting-title">Hola User</h1>
+                <h1 id="user-nickname" class="greeting-title">Hola User</h1>
                 <h2 class="question-subtitle mt-1">¿Qué quieres jugar hoy?</h2>
             </div>
             <div class="notification-glass" onclick="openModal('modal-notificaciones')">
@@ -315,7 +315,7 @@
                             Toka Tokens</h5>
                         <b style="font-size: 1.2rem;">1,250</b>
                     </div>
-                    <button class="glass-btn w-100 mb-2 mt-1"
+                    <button class="glass-btn w-100 mb-2 mt-1" onclick="TokaApi.buyTokaTokens()"
                         style="font-size: 0.8rem; border-color: #00f0ff; color: #00f0ff; box-shadow: 0 0 10px rgba(0,240,255,0.3);"><i
                             class="fa-solid fa-cart-shopping"></i> Comprar Toka Tokens</button>
                     <p class="text-secondary" style="font-size: 0.8rem; margin:0;">Gánalos completando retos diarios o
