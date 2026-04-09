@@ -24,7 +24,7 @@ body {
 
 #master-container {
     background-color: #2f3640;
-    height: 100vh;
+    height: 100dvh;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -35,7 +35,7 @@ body {
 
 .road {
     width: 400px;
-    height: 100vh;
+    height: 100dvh;
     background-image: url('/images/road.png');
     background-repeat: repeat-y;
     background-size: 100% 100%;
@@ -128,12 +128,12 @@ body {
 @media (max-width: 600px) {
     #master-container {
         width: 100vw;
-        height: 100vh;
+        height: 100dvh;
     }
 
     .road {
         width: 100vw;
-        height: 100vh;
+        height: 100dvh;
         border: none;
     }
 }
