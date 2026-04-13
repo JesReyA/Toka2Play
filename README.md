@@ -1,4 +1,4 @@
-# Toka2Play
+# Toka2Play  (SEMIFINALISTA EN GENIUS ARENA HACKATHON 2026)
 TOKA2PLAY es una Mini App de entretenimiento, diseñada para vivir nativamente dentro de la Super App Toka. Contiene un catálogo de minijuegos, trivias sociales a gran escala y en comunidades pequeñas con posibilidades de  conectar en una red de amigos. 
 
 FLUJO DE TRABAJO DE APIS
